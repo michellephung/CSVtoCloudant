@@ -18,12 +18,21 @@
             </div><!-- #header -->
             <div id="content-wrap">
                 <div id="content">
-                    <div id="file-drop-box">
-                        <div id="instructions">
-                            Drag .csv file(s) here
+                   <form id="upload" action="index.html" method="POST" enctype="multipart/form-data"> 
+                        <input type="file" id="fileselect" name="fileselect[]" multiple="multiple" />
+                        <div id="file-drop-box">
+                            <div id="drop-mask">
+                            </div>
+                            <div id="instructions">
+                                Drag .csv file(s) here
+                            </div>
+                            <img id="file-icon" src="css/images/file_icon.png" >
+                            
                         </div>
-                        <img id="file-icon" src="css/images/file_icon.png" >
-                    </div>
+                        
+                        
+
+                    </form>
                     <img  id="long-arrow" src="css/images/long_arrow.png" >
                     <form id="user-inputs" action="#">
                         <img id="logo" src="css/images/cloudant_logo_white.png">
