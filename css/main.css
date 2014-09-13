@@ -77,7 +77,7 @@ body {
 	margin-top: 145px;
 }
 #long-arrow{
-	display:inline;
+	float:left;
 	width: 100px;
 	margin-left: 27px;
 	margin-top: 120px;
