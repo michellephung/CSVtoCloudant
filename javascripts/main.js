@@ -1,2 +1,9 @@
 //main.js
-console.log("hello world");
+dragAndDrop = function(){
+}
+listeners = function(){
+}
+main = function(){
+}
+
+main();
