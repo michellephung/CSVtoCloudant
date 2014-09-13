@@ -18,18 +18,27 @@
             </div><!-- #header -->
             <div id="content-wrap">
                 <div id="content">
-                    <div id="file-drop-box">
-                        <div id="instructions">
-                            Drag .csv file(s) here
+                   <form id="upload" action="index.html" method="POST" enctype="multipart/form-data"> 
+                        <input type="file" id="fileselect" name="fileselect[]" multiple="multiple" />
+                        <div id="file-drop-box">
+                            <div id="drop-mask">
+                            </div>
+                            <div id="instructions">
+                                Drag .csv file(s) here
+                            </div>
+                            <img id="file-icon" src="css/images/file_icon.png" >
+                            
                         </div>
-                        <img id="file-icon" src="css/images/file_icon.png" >
-                    </div>
+                        
+                        
+
+                    </form>
                     <img  id="long-arrow" src="css/images/long_arrow.png" >
                     <form id="user-inputs" action="#">
                         <img id="logo" src="css/images/cloudant_logo_white.png">
                         <div id="inputs">
-                            <input type="text" name="UserName" value="username"><input type="text" name="Password" value="password">
-                            <input type="text" name="DBName" value="database name">
+                            <input type="text" id="username" placeholder="username"><input type="password" id="password" placeholder="password">
+                            <input type="text" id="DBName" placeholder="database name">
                         <a id="start">
                             start<img id="start-arrow" src="css/images/right_arrow.png"></a>
                     </form>

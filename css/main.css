@@ -1,6 +1,7 @@
 /*
     main.css for CSVtoCloudant
-    An application which lets drag and drop .csv files into a Cloudant Database
+    An application which lets drag and drop .csv files 
+    into a Cloudant Database
     by Michelle Phung for Cloudant
     September 12, 2014
 */
@@ -34,20 +35,40 @@ body {
 	height: 250px;
 	width: 740px;
 }
+#fileselect{
+	display:none;
+}
+
 #file-drop-box{
+	display:none;
 	height:225px;
 	width: 225px;
 	border: 3px dashed #002c77;
 	border-radius: 25px;
 	float: left;
 	margin: 20px;
+	color: #002c77;
+
 }
+#file-drop-box.hover{
+	color: #F07C51;
+	border-color: #F07C51;
+}
+#drop-mask {
+    position:absolute;
+    width:233px;
+    height:233px;
+    z-index:99;
+    display:none;
+    margin-left:-5px;
+    margin-top: -5px;
+}	
 #instructions{
 	float:left;
 	width: 130px;
 	margin-left: 20px;
 	margin-top: 20px;
-	color: #002c77;
+	
 	font-size: 26px;
 }
 #file-icon{
@@ -78,7 +99,7 @@ input{
 	height: 40px;
 	width: 250px;
 	text-align: center;
-	color: #bbb;
+	color: #002C77;
 	margin-left:auto;
 	margin-right: auto;
 	display:block;
