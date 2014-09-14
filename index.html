@@ -12,8 +12,7 @@
         <link rel="stylesheet" href="css/main.css">
     </head>
     <body>
-        <div id="wrapper">
-        
+        <div id="step1">
             <div id="header">
             </div><!-- #header -->
             <div id="content-wrap">
@@ -26,28 +25,28 @@
                             <div id="instructions">
                                 Drag .csv file(s) here
                             </div>
-                            <img id="file-icon" src="css/images/file_icon.png" >
-                            
+                            <img id="file-icon" src="css/images/file_icon.png"/>
                         </div>
-                        
-                        
-
                     </form>
-                    <img  id="long-arrow" src="css/images/long_arrow.png" >
+                    <img  id="long-arrow" src="css/images/long_arrow.png"/ >
                     <form id="user-inputs" action="#">
                         <img id="logo" src="css/images/cloudant_logo_white.png">
                         <div id="inputs">
-                            <input type="text" id="username" placeholder="username"><input type="password" id="password" placeholder="password">
-                            <input type="text" id="DBName" placeholder="database name">
+                            <input type="text" id="username" placeholder="username"/>
+                            <input type="password" id="password" placeholder="password"/>
+                            <input type="text" id="DBName" placeholder="database name"/>
+                        </div>
                         <a id="start">
-                            start<img id="start-arrow" src="css/images/right_arrow.png"></a>
+                            start<img id="start-arrow" src="css/images/right_arrow.png">
+                        </a>
                     </form>
                 </div>
             </div><!-- #content -->
-            <div id="footer">
-            </div><!-- #footer -->
-        </div><!-- #wrapper -->
+        </div><!-- #step1 -->
+        
+        <div id="footer"></div><!-- #footer -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="javascripts/papaparse.min.js"></script>
         <script src="javascripts/main.js"></script>
     </body>
 </html>

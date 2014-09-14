@@ -16,7 +16,10 @@ body {
 	font-size: 20px;
 	font-weight: 400px;
 }
-#wrapper {
+
+/* First Page -----------------------------------------------*/
+
+#step1 {
 	min-height:100%;
 	position:relative;
 }
@@ -38,7 +41,6 @@ body {
 #fileselect{
 	display:none;
 }
-
 #file-drop-box{
 	display:none;
 	height:225px;
@@ -48,7 +50,6 @@ body {
 	float: left;
 	margin: 20px;
 	color: #002c77;
-
 }
 #file-drop-box.hover{
 	color: #F07C51;
@@ -81,14 +82,11 @@ body {
 	width: 100px;
 	margin-left: 27px;
 	margin-top: 120px;
-
 }
 #user-inputs{
 	height:100%;
 	width: 330px;
-
 	float: right;
-
 }
 #logo{
 	width: 330px;
@@ -96,12 +94,13 @@ body {
 input{
 	border: none;
 	margin-bottom: 5px;
+	margin-left:auto;
+	margin-right: auto;
 	height: 40px;
 	width: 250px;
 	text-align: center;
 	color: #002C77;
-	margin-left:auto;
-	margin-right: auto;
+
 	display:block;
 }
 #start{
@@ -119,6 +118,8 @@ input{
 	width:10px;
 	padding-left: 3px;
 }
+
+
 #footer {
 	background-color: #002c77;
 	width:100%;
