@@ -126,10 +126,8 @@ input{
 	height:100%;
 	overflow-y: scroll;
 	position: absolute;
-
 }
 #options-wrapper{
-	border: 1px solid blue;
 	height: 200px;
 	width: 750px;
 	margin:auto;
@@ -138,14 +136,13 @@ input{
 #preview{
 	background-color: white;
 	width: 750px;
-	height:100%;
 	margin: auto;
 	padding: 30px;
-	overflow-x:scroll;
+	margin-bottom: 150px;
+	overflow-x: scroll; 
 }
 #preview-table{
 	width: 100%;
-	
 }
 table, th, td {
     border-collapse: collapse;
@@ -162,8 +159,10 @@ td{
 }
 th, td {
     padding: 15px;
+    max-width: 200px;
+	overflow: hidden;
+  	text-overflow: ellipsis;
 }
-
 #footer {
 	background-color: #002c77;
 	width:100%;

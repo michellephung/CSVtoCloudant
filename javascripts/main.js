@@ -165,7 +165,8 @@ $(function(){
 	}
 	function start(){
 		$("#start").click(function(){
-		//	$("#step1").hide();
+			$("#step1").hide();
+			$("#header").hide();
 			$("#step2").show();
 		});
 	}

@@ -16,32 +16,283 @@
             <div id="header">
                 </div><!-- #header -->
             <div id="step1">
-                    <div id="content">
-                       <form id="upload" action="index.html" method="POST" enctype="multipart/form-data"> 
-                            <input type="file" id="fileselect" name="fileselect[]" multiple="multiple" />
-                            <div id="file-drop-box">
-                                <div id="drop-mask">
-                                </div>
-                                <div id="instructions">
-                                    Drag .csv file(s) here
-                                </div>
-                                <img id="file-icon" src="css/images/file_icon.png"/>
+                <div id="content">
+                   <form id="upload" action="index.html" method="POST" enctype="multipart/form-data"> 
+                        <input type="file" id="fileselect" name="fileselect[]" multiple="multiple" />
+                        <div id="file-drop-box">
+                            <div id="drop-mask">
                             </div>
-                        </form>
-                        <img  id="long-arrow" src="css/images/long_arrow.png"/ >
-                        <form id="user-inputs" action="#">
-                            <img id="logo" src="css/images/cloudant_logo_white.png">
-                            <div id="inputs">
-                                <input type="text" id="username" placeholder="username"/>
-                                <input type="password" id="password" placeholder="password"/>
-                                <input type="text" id="DBName" placeholder="database name"/>
+                            <div id="instructions">
+                                Drag .csv file(s) here
                             </div>
-                            <a id="start">
-                                start<img id="start-arrow" src="css/images/right_arrow.png">
-                            </a>
-                        </form>
-                    </div>
+                            <img id="file-icon" src="css/images/file_icon.png"/>
+                        </div>
+                    </form>
+                    <img  id="long-arrow" src="css/images/long_arrow.png"/ >
+                    <form id="user-inputs" action="#">
+                        <img id="logo" src="css/images/cloudant_logo_white.png">
+                        <div id="inputs">
+                            <input type="text" id="username" placeholder="username"/>
+                            <input type="password" id="password" placeholder="password"/>
+                            <input type="text" id="DBName" placeholder="database name"/>
+                        </div>
+                        <a id="start">
+                            start<img id="start-arrow" src="css/images/right_arrow.png">
+                        </a>
+                    </form>
+                </div>
             </div><!-- #step1 -->
+            <div id="step2">
+                <div id="step2-content-wrapper">
+                    <div id="options-wrapper">
+                        options
+                    </div>
+                    <div id="preview">
+                        <table id="preview-table">
+                            <tr>
+                                <th>FnameJacksonJacksonFnameJacksonJackson</th>
+                                <th>Lname</th> 
+                                <th>Cats</th>
+                                <th>Eve</th>
+                                <th>Jackson</th> 
+                                <th>94</th>
+                                <th>Fname</th>
+                                <th>Lname</th> 
+                                <th>Cats</th>
+                                <th>Eve</th>
+                                <th>Jackson</th> 
+                                <th>94</th>
+                                <th>Fname</th>
+                                <th>Lname</th> 
+                                <th>Cats</th>
+                                <th>Eve</th>
+                                <th>Jackson</th> 
+                                <th>94</th>
+                            </tr>
+                            <tr>
+                                <td>1Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                                <td>Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                                <td>Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                            </tr>
+                            <tr>
+                                <td>2Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                                <td>Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                                <td>Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                            </tr>
+                            <tr>
+                                <td>3Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                                <td>Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                                <td>Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                            </tr>
+                            <tr>
+                                <td>4Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                                <td>Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                                <td>Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                            </tr>
+                            <tr>
+                                <td>5Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                                <td>Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                                <td>Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                            </tr>
+                            <tr>
+                                <td>6Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                                <td>Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                                <td>Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                            </tr>
+                            <tr>
+                                <td>7Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                                <td>Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                                <td>Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                            </tr>
+                            <tr>
+                                <td>8Jill8Jill8Jill8Jill8Jill8Jill8Jill8Jill8Jill8Jill8Jill8Jill8Jill8Jill8Jill8Jill8Jill8Jill8Jill8Jill8Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>8Jill8Jill8Jill8Jill8Jillv</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                                <td>Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                                <td>Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                            </tr>
+                            <tr>
+                                <td>9Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                                <td>Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                                <td>Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                            </tr>
+                            <tr>
+                                <td>1Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                                <td>Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                                <td>Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                            </tr>
+                            <tr>
+                                <td>2Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                                <td>Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                                <td>Jill</td>
+                                <td>Smith</td> 
+                                <td>50</td>
+                                <td>Eve</td>
+                                <td>Jackson</td> 
+                                <td>94</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
             <div id="footer"></div><!-- #footer -->
         </div><!-- #content -->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
