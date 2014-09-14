@@ -160,6 +160,7 @@ td{
 th, td {
     padding: 15px;
     max-width: 200px;
+    white-space: nowrap;
 	overflow: hidden;
   	text-overflow: ellipsis;
 }

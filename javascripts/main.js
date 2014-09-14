@@ -34,12 +34,11 @@ $(function(){
 
 		//	step 1
 		dragAndDrop();
-		inputs();
+		//inputs();
 		start();
 
 		//	step 2
 		//documentOptions();
-		
 	}
 
 	//functions below:
@@ -126,8 +125,6 @@ $(function(){
 
 	}
 	function preview(files){
-		//console.log(files);
-
 		var config,
 			data = [];
 
@@ -155,13 +152,8 @@ $(function(){
 		{
 			if (arguments[0] && arguments[0].data)
 				rows = arguments[0].data.length;
-
-
 			console.log(arguments);
 		}
-
-
-		
 	}
 	function start(){
 		$("#start").click(function(){
@@ -170,6 +162,5 @@ $(function(){
 			$("#step2").show();
 		});
 	}
-	
 	main();
 });
