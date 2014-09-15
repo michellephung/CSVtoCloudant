@@ -29,8 +29,9 @@ $(function(){
 
 	function main(){
 
-		//	steps 0
+		//	step 0
 		browserCheck();
+		
 
 		//	step 1
 		dragAndDrop();
@@ -38,7 +39,7 @@ $(function(){
 		start();
 
 		//	step 2
-		//documentOptions();
+		documentOptions();
 	}
 
 	//functions below:
@@ -49,7 +50,41 @@ $(function(){
 			console.log("This browser is not supported for uploading files :(");
 		}
 	}
+	function buildConfig(){
 
+	}
+	function convertToJSON(files){
+		var config,
+			data = [];
+
+		config = {
+			delimiter: "", //leaving this blank, automatically detects delimiter
+			header: false,
+			dynamicTyping: true,
+			preview: 0,
+			step: function(results, handle) {
+				console.log("Row data:", results.data[0]);
+			},
+			encoding: "",
+			worker: false,
+			comments: false,
+			complete: completeFn,
+			error: undefined,
+			download: false,
+			keepEmptyRows: false,
+			chunk: undefined
+		};
+
+		for (var i = 0, f; f = files[i]; i++) {
+			Papa.parse(f,config);
+		}
+
+		function completeFn()
+		{
+			if (arguments[0] && arguments[0].data)	numberOfRows = arguments[0].data.length;
+			//preview(arguments);
+		}
+	}
 	function dragAndDrop(){
 
 		// initialize
@@ -98,7 +133,7 @@ $(function(){
 			}
 			$("#file-drop-box").removeClass("hover");
 			$('#drop-mask').hide();
-			preview(files);
+			convertToJSON(files);
 		}
 
 		// output file information
@@ -120,40 +155,40 @@ $(function(){
 		}
 
 	}
+	function dropDownMenu(id){
+		$("#"+id+" .dropdown dt a").click(function() {
+            $("#"+id+" .dropdown dd ul").toggle();
+        });
+                        
+        $("#"+id+" .dropdown dd ul li a").click(function() {
+            var text = $(this).html();
+            $("#"+id+" .dropdown dt a span").html(text);
+            $("#"+id+" .dropdown dd ul").hide();
+            console.log(getSelectedValue());
+        });
+                    
+        function getSelectedValue() {
+            return $("#" + id).find("dt a span.value").html();
+        }
 
+        $(document).bind('click', function(e) {
+            var $clicked = $(e.target);
+            if (! $clicked.parents().hasClass("dropdown"))
+                $("#"+id+" .dropdown dd ul").hide();
+        });
+	}
+	function documentOptions(){
+		dropDownMenu("options-delimiter");
+		dropDownMenu("options-header");
+		dropDownMenu("options-doc-load-format");
+		dropDownMenu("options-number-format");
+	}
 	function inputs(){
 
 	}
-	function preview(files){
-		var config,
-			data = [];
+	function preview(results){
+		console.log(results);
 
-		config = {
-			delimiter: ",",
-			header: false,
-			dynamicTyping: false,
-			preview: 0,
-			step: undefined,
-			encoding: "",
-			worker: false,
-			comments: false,
-			complete: completeFn,
-			error: undefined,
-			download: false,
-			keepEmptyRows: false,
-			chunk: undefined
-		};
-
-		for (var i = 0, f; f = files[i]; i++) {
-			Papa.parse(f,config);
-		}
-
-		function completeFn()
-		{
-			if (arguments[0] && arguments[0].data)
-				rows = arguments[0].data.length;
-			console.log(arguments);
-		}
 	}
 	function start(){
 		$("#start").click(function(){

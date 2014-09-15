@@ -32,9 +32,9 @@
                     <form id="user-inputs" action="#">
                         <img id="logo" src="css/images/cloudant_logo_white.png">
                         <div id="inputs">
-                            <input type="text" id="username" placeholder="username"/>
-                            <input type="password" id="password" placeholder="password"/>
-                            <input type="text" id="DBName" placeholder="database name"/>
+                            <input type="text" id="username" class="login" placeholder="username"/>
+                            <input type="password" id="password" class="login" placeholder="password"/>
+                            <input type="text" id="DBName" class="login" placeholder="database name"/>
                         </div>
                         <a id="start">
                             start<img id="start-arrow" src="css/images/right_arrow.png">
@@ -45,7 +45,63 @@
             <div id="step2">
                 <div id="step2-content-wrapper">
                     <div id="options-wrapper">
-                        options
+                        <div id="options-left-side">
+                            <div id="options-delimiter" class="option-dropdown-menu">
+                                <dl  class="dropdown">
+                                    <dt><a href="#"><span>Delimiter</span></a></dt>
+                                    <dd>
+                                        <ul>
+                                            <li><a href="#">comma ( , )<span class="value">,</span></a></li>
+                                            <li><a href="#">tab ( \t )<span class="value">\t</span></a></li>
+                                            <li><a href="#">semicolon ( ; )<span class="value">;</span></a></li>
+                                            <li><a href="#">colon ( : )<span class="value">:</span></a></li>
+                                            <li><a href="#">hyphen ( - )<span class="value">-</span></a></li>
+                                        </ul>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div>
+                                File has [50] lines. Get  <input type="number" id="number-of-lines-to-get" class="options"  placeholder="all" min="0"/> lines.
+                            </div>
+                            <div id="options-header" class="option-dropdown-menu">
+                                <dl class="dropdown">
+                                    <dt><a href="#"><span>First line is header</span></a></dt>
+                                    <dd>
+                                        <ul>
+                                            <li><a href="#">First line is header<span class="value">header</span></a></li>
+                                            <li><a href="#">Load as column number<span class="value">noHeader</span></a></li>
+                                        </ul>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <div id="options-right-side">
+                            <div id="load">Load<img id="start-arrow" src="css/images/right_arrow.png">
+                            </div>
+                            <span id="inDBtext">In [DatabaseName] DB:</span>
+                            <div id="options-doc-load-format" class="option-dropdown-menu">
+                                <dl class="dropdown ">
+                                    <dt><a href="#"><span>One document per row</span></a></dt>
+                                    <dd>
+                                        <ul>
+                                            <li><a href="#">One document per row<span class="value">1DocPerRow</span></a></li>
+                                            <li><a href="#">One document per file<span class="value">1DocPerFile</span></a></li>
+                                        </ul>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div id="options-number-format" class="option-dropdown-menu">
+                                <dl class="dropdown">
+                                    <dt><a href="#"><span>Load numbers as numbers</span></a></dt>
+                                    <dd>
+                                        <ul>
+                                            <li><a href="#">Load numbers as numbers<span class="value">1DocPerRow</span></a></li>
+                                            <li><a href="#">Load numbers as strings<span class="value">1DocPerFile</span></a></li>
+                                        </ul>
+                                    </dd>
+                                </dl>
+                            </div>
+                        </div>
                     </div>
                     <div id="preview">
                         <table id="preview-table">
@@ -70,13 +126,7 @@
                                 <th>94</th>
                             </tr>
                             <tr>
-                                <td>1Jill</td>
-                                <td>Smith</td> 
-                                <td>50</td>
-                                <td>Eve</td>
-                                <td>Jackson</td> 
-                                <td>94</td>
-                                <td>Jill</td>
+                                <td>Short Row</td>
                                 <td>Smith</td> 
                                 <td>50</td>
                                 <td>Eve</td>

@@ -89,7 +89,7 @@ body {
 #logo{
 	width: 330px;
 }
-input{
+input.login{
 	border: none;
 	margin-bottom: 5px;
 	margin-left:auto;
@@ -132,6 +132,100 @@ input{
 	width: 750px;
 	margin:auto;
 	padding: 30px;
+	color:#002c77;
+}
+#options-left-side{
+	float: left;
+}
+
+#options-right-side{
+	float: right;
+}
+#inDBtext{
+	color: #888;
+	font-size: 16px;
+}
+#load{
+	text-align: right;
+	font-size: 14px;
+	cursor: pointer;
+
+}
+#load:hover{
+	text-decoration: underline;
+}
+
+input.options{
+	width: 50px;
+	text-align: center;
+	display:inline;
+}
+
+.desc { 
+	color:#002c77;
+}
+.desc a {
+	color:#002c77;
+}
+.dropdown dd, .dropdown dt, .dropdown ul { 
+	margin:0px; 
+	padding:0px; 
+}
+.dropdown dd { 
+	position:relative; 
+}
+.dropdown a, .dropdown a:visited { 
+	color:#002c77; 
+	text-decoration:none; 
+	outline:none;
+}
+.dropdown a:hover { 
+	color:#002c77;
+}
+.dropdown dt a:hover { 
+	color: #002c77; 
+	border: 1px solid orange;
+}
+.dropdown dt a {
+	background:#cfdee2 url(images/down_arrow.png) no-repeat scroll right center; 
+	display:block; 
+	padding-right:20px;
+	border:1px solid #002c77; 
+	width:220px;
+}
+.dropdown dt a span {
+	cursor:pointer; 
+	display:block; 
+	padding:5px;
+}
+.dropdown dd ul { 
+	background:#cfdee2 none repeat scroll 0 0; 
+	border:1px solid #002c77; 
+	color:#002c77; 
+	display:none;
+	left:0px; 
+	padding:5px 0px; 
+	position:absolute; 
+	top:2px; 
+	width:220; 
+	min-width:220px; 
+	list-style:none;
+}
+.dropdown span.value { 
+	display:none;
+}
+.dropdown dd ul li a { 
+	padding:5px; 
+	display:block;
+	min-width:230px;
+}
+.dropdown dd ul li a:hover { 	/*highlighting color*/
+	background-color: #CCD0D8;
+}
+.dropdown img.flag { 
+	border:none; 
+	vertical-align:middle; 
+	margin-left:10px; 
 }
 #preview{
 	background-color: white;
