@@ -59,7 +59,7 @@ $(function(){
 
 		config = {
 			delimiter: "", //leaving this blank, automatically detects delimiter
-			header: false,
+			header: true,
 			dynamicTyping: true,
 			preview: 0,
 			step: function(results, handle) {
@@ -82,7 +82,7 @@ $(function(){
 		function completeFn()
 		{
 			if (arguments[0] && arguments[0].data)	numberOfRows = arguments[0].data.length;
-			//preview(arguments);
+			preview(arguments);
 		}
 	}
 	function dragAndDrop(){
@@ -184,10 +184,8 @@ $(function(){
 		dropDownMenu("options-number-format");
 		dropDownMenu("options-id");
 	}
-	function inputs(){
-
-	}
 	function preview(results){
+		console.log("results:");
 		console.log(results);
 
 	}
