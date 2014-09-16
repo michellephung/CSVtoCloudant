@@ -142,15 +142,21 @@ input.login{
 #options-right-side{
 	float: right;
 }
+#options-right-side .option-dropdown-menu{
+	margin-top: -4px;
+}
 #inDBtext{
 	color: #888;
 	font-size: 16px;
+}
+#div-load{
+	height:18px;
 }
 #load{
 	text-align: right;
 	font-size: 14px;
 	cursor: pointer;
-
+	float:right;
 }
 #load:hover{
 	text-decoration: underline;
@@ -185,14 +191,14 @@ input.options{
 }
 .dropdown dt a:hover { 
 	color: #002c77; 
-	border: 1px solid orange;
+	border: 2px solid orange;
 }
 .dropdown dt a {
 	background:#cfdee2 url(images/down_arrow.png) no-repeat scroll right center; 
 	display:block; 
 	padding-right:20px;
-	border:1px solid #002c77; 
-	width:220px;
+	border:2px solid #002c77; 
+	width:250px;
 }
 .dropdown dt a span {
 	cursor:pointer; 
@@ -201,15 +207,15 @@ input.options{
 }
 .dropdown dd ul { 
 	background:#cfdee2 none repeat scroll 0 0; 
-	border:1px solid #002c77; 
+	border:2px solid #002c77; 
 	color:#002c77; 
 	display:none;
 	left:0px; 
 	padding:5px 0px; 
 	position:absolute; 
 	top:2px; 
-	width:220; 
-	min-width:220px; 
+	width:250; 
+	min-width:250px; 
 	list-style:none;
 }
 .dropdown span.value { 
@@ -218,7 +224,7 @@ input.options{
 .dropdown dd ul li a { 
 	padding:5px; 
 	display:block;
-	min-width:230px;
+	min-width:260px;
 }
 .dropdown dd ul li a:hover { 	/*highlighting color*/
 	background-color: #CCD0D8;

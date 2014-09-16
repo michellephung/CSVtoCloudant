@@ -182,6 +182,7 @@ $(function(){
 		dropDownMenu("options-header");
 		dropDownMenu("options-doc-load-format");
 		dropDownMenu("options-number-format");
+		dropDownMenu("options-id");
 	}
 	function inputs(){
 

@@ -46,6 +46,7 @@
                 <div id="step2-content-wrapper">
                     <div id="options-wrapper">
                         <div id="options-left-side">
+                            <div id="leftsidespacefiller"></div>
                             <div id="options-delimiter" class="option-dropdown-menu">
                                 <dl  class="dropdown">
                                     <dt><a href="#"><span>Delimiter</span></a></dt>
@@ -76,7 +77,10 @@
                             </div>
                         </div>
                         <div id="options-right-side">
-                            <div id="load">Load<img id="start-arrow" src="css/images/right_arrow.png">
+
+                            <div id="div-load">
+                                <a id="load">Load<img id="start-arrow" src="css/images/right_arrow.png">
+                                </a>
                             </div>
                             <span id="inDBtext">In [DatabaseName] DB:</span>
                             <div id="options-doc-load-format" class="option-dropdown-menu">
@@ -97,6 +101,17 @@
                                         <ul>
                                             <li><a href="#">Load numbers as numbers<span class="value">1DocPerRow</span></a></li>
                                             <li><a href="#">Load numbers as strings<span class="value">1DocPerFile</span></a></li>
+                                        </ul>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div id="options-id" class="option-dropdown-menu">
+                                <dl class="dropdown">
+                                    <dt><a href="#"><span>_id is UUID</span></a></dt>
+                                    <dd>
+                                        <ul>
+                                            <li><a href="#">_id is UUIDs<span class="value">choose_uuid_as_id</span></a></li>
+                                            <li><a href="#">_id is first column<span class="value">choose_first_col_as_id</span></a></li>
                                         </ul>
                                     </dd>
                                 </dl>
