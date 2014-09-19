@@ -4,7 +4,6 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>CSV to Cloudant</title>
-        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cloudant.com/wp-content/themes/cloudant/images/favicon.png" rel="icon" type="image/png">
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet" type="text/css">
@@ -13,7 +12,6 @@
     </head>
     <body>
         <div id="wrapper">
-        
             <div id="header">
             </div><!-- #header -->
             <div id="content-wrap">
@@ -21,17 +19,13 @@
                    <form id="upload" action="index.html" method="POST" enctype="multipart/form-data"> 
                         <input type="file" id="fileselect" name="fileselect[]" multiple="multiple" />
                         <div id="file-drop-box">
-                            <div id="drop-mask">
+                            <div id="drop-mask" class="drop-mask">
                             </div>
                             <div id="instructions">
                                 Drag .csv file(s) here
                             </div>
-                            <img id="file-icon" src="css/images/file_icon.png" >
-                            
+                            <img id="file-icon" src="css/images/file_icon.png" > 
                         </div>
-                        
-                        
-
                     </form>
                     <img  id="long-arrow" src="css/images/long_arrow.png" >
                     <form id="user-inputs" action="#">
@@ -43,11 +37,21 @@
                             start<img id="start-arrow" src="css/images/right_arrow.png"></a>
                     </form>
                 </div>
+                <table>
+                    <tr>
+                        <script type="text/template" id="doc-template">
+                            <%-doc_data %>
+                        </script>
+                    </tr>
+                <table>
+
             </div><!-- #content -->
             <div id="footer">
             </div><!-- #footer -->
         </div><!-- #wrapper -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+        <script src="javascripts/jquery-1.11.1.min.js"></script>
+        <script src="javascripts/underscore-min.js"></script>
+        <script src="javascripts/backbone-min.js"></script>
         <script src="javascripts/main.js"></script>
     </body>
 </html>
