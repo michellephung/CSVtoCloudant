@@ -6,186 +6,182 @@ CSV to Cloudant Web App
 Developed by Michelle Phung for Cloudant/IBM
 September 13th, 2014
 
-This document is set up as follows:
-	_________________________________________________________
-	|														|
-	|	main(){												|
-	|		//step 1 functions								|
-	|		//step 2 functions								|
-	|		//step 3 functions								|
-	|	}													|
-	|														|
-	|	//	functions for steps 1 - 3 						|
-	|	//	defined here in alpha order						|
-	|														|
-	|														|
-	|	main() //<-- main is called at the end of the file 	|
-	|_______________________________________________________|
-
 */
 
 
 $(function(){
 
-	function main(){
+	var app = {};
 
-		//	step 0
-		browserCheck();
-		
+	//--------------
+    // Models
+    //--------------
+    app.Doc = Backbone.Model.extend({
+    });
 
-		//	step 1
-		dragAndDrop();
-		start();
+    app.User = Backbone.Model.extend({
+        defaults:{
+            username: "user1",
+            password: "pw",
+            database: "dbName"
+        }
+    });
 
-		//	step 2
-		documentOptions();
-	}
+    //--------------
+    // Collections
+    //--------------
+    app.Docs = Backbone.Collection.extend({
+    	model: app.Doc
+    });
 
-	//functions below:
-	function browserCheck(){
-		if (window.File && window.FileList && window.FileReader){
-			console.log("This browser supports uploading files.");
-		}else{
-			console.log("This browser is not supported for uploading files :(");
-		}
-	}
-	function buildConfig(){
-		return {
-			delimiter: "", //leaving this blank, automatically detects delimiter
-			header: true,
-			dynamicTyping: true,
-			preview: 0,
-			step: /*function(results, handle) {
-				console.log("Row data:", results.data[0]);
-			}*/undefined,
-			encoding: "",
-			worker: false,
-			comments: false,
-			complete: function(results) {
-				console.log("Parsing complete:");
-				console.log(results);
-			},
-			error: undefined,
-			download: false,
-			keepEmptyRows: false,
-			chunk: undefined
-		};
-	}
-	function convertToJSON(files){
-		var config,
-			data = [];
+    app.docs = new app.Docs();
 
-		config = buildConfig();
-
-		for (var i = 0, f; f = files[i]; i++) {
-			Papa.parse(f,config);
-		}
-	}
-	function dragAndDrop(){
-
-		// initialize
-		function Init() {
-
-			var dropmask = document.getElementById("drop-mask"),
-				filedrag = document.getElementById("file-drop-box");
-			
-			// is XHR2 available?
-			var xhr = new XMLHttpRequest();
-			if (xhr.upload) {
-
-				// file drop
-				filedrag.addEventListener("dragover", FileDragHover, false);
-				dropmask.addEventListener("dragleave", FileDragLeave, false);
-				dropmask.addEventListener("drop", FileDrop, false);
-
-				filedrag.style.display = "block";
-			}
-		}
-
-		function FileDragHover(e) {
-			StopEvents(e);
-
-			document.getElementById("file-drop-box").className = (e.type == "dragover" ? "hover" : "");
-			$('#drop-mask').show();
-		}
-
-		function FileDragLeave(e){
-			
-			StopEvents(e);
-			document.getElementById("file-drop-box").className = "";
+    //--------------
+    // Views
+    //--------------
+    app.FileDrop= Backbone.View.extend({
+    	el: "#file-drop-box",
+    	initialize: function(){
+    		var dropmask =$("#drop-mask"),
+                filedrag = $("#file-drop-box");
+			filedrag.css("display", "block");
+    	},
+    	events: {
+    		'dragover': 'FileDragHover',
+    		'dragleave .drop-mask': 'FileDragLeave',
+    		'drop .drop-mask': 'FileDrop'
+    	},
+        BuildConfig: function(){
+            return {
+                delimiter: "", //leaving this blank, automatically detects delimiter
+                header: true,
+                dynamicTyping: true,
+                preview: 2,
+                step: function(results, handle) {
+                    var json = results.data[0],
+                        newDoc = new app.Doc(json);
+                    console.log("Row data:", newDoc);
+                    app.docs.add(newDoc);
+                },
+                encoding: "",
+                worker: false,
+                comments: false,
+                complete: function() {
+                    console.log("Parsing complete");
+                },
+                error: undefined,
+                download: false,
+                keepEmptyRows: false,
+                chunk: undefined
+            };
+        },
+    	FileDragHover: function(e){
+    		this.StopEvents(e);
+			e.type == "dragover" ? $("#file-drop-box").addClass("hover") :$("#file-drop-box").removeClass();
+            $('#drop-mask').show();
+    	},
+    	FileDragLeave: function(e){
+    		this.StopEvents(e);
+			$("#file-drop-box").removeClass();
 			$('#drop-mask').hide();
-		}
-
-		function FileDrop(e) {
-
-			StopEvents(e);
+    	},
+    	FileDrop: function(e){
+    		this.StopEvents(e);
 
 			// fetch FileList object
-			var files = document.getElementById("file-drop-box").files || e.dataTransfer.files;
+			var files = e.originalEvent.dataTransfer.files;
 
 			// process all File objects
 			for (var i = 0, f; f = files[i]; i++) {
-				ParseFile(f);
+				this.ParseFile(f);
 			}
 			$("#file-drop-box").removeClass("hover");
 			$('#drop-mask').hide();
-			convertToJSON(files);
-		}
 
-		// output file information
-		function ParseFile(file) {
-			console.log("File information: " + file.name +
-				"\ntype: " + file.type +
-				"\nsize: " + file.size +" bytes"
-			);
-		}
-		
-		function StopEvents(e){
-			e.stopPropagation();
+            for (var i = 0, f; f = files[i]; i++) {
+                Papa.parse(f,this.BuildConfig());
+            }
+
+    	},
+    	ParseFile: function(file){
+            console.log(
+                "File information: " + file.name +
+                "\ntype: " + file.type +
+                "\nsize: " + file.size +" bytes"
+            );
+        },
+        StopEvents: function(e){
+    		e.stopPropagation();
 			e.preventDefault();
-		}
+    	}    	
+    });
 
-		// call initialization file
-		if (window.File && window.FileList && window.FileReader) {
-			Init();
-		}
+    app.UserInputView = Backbone.View.extend({
+        el: "#user-inputs",
+        initialize: function(){
 
-	}
-	function dropDownMenu(id){
-		$("#"+id+" .dropdown dt a").click(function() {
-            $("#"+id+" .dropdown dd ul").toggle();
-        });
-                        
-        $("#"+id+" .dropdown dd ul li a").click(function() {
-            var text = $(this).html();
-            $("#"+id+" .dropdown dt a span").html(text);
-            $("#"+id+" .dropdown dd ul").hide();
-            console.log(getSelectedValue());
-        });
-                    
-        function getSelectedValue() {
-            return $("#" + id).find("dt a span.value").html();
+        },
+        events:{
+            'click .start':'start'
+        },
+        start: function(){
+            console.log("you clicked start");
+            var that = this;
+            if(this.inputsAreValid()){
+
+                var u = $("#username").val(),
+                    p = $("#password").val(),
+                    d = $("#DBName").val();
+
+                app.docs.each(function(model, index){
+                    var json = model.attributes;
+                    that.LoadIntoCloudant(json, u, p, d);
+                });
+
+            }else{
+                console.log("inputs are invalid"); 
+            }
+        },
+        inputsAreValid: function(){
+            var inputsAreValid = false;
+            if( $("#username").val() != "" && $("#password").val()!= "" && $("#DBName").val()!= ""){
+                inputsAreValid = true;
+            }
+            return inputsAreValid;
+        },
+        LoadIntoCloudant: function(json, user, password, dbname){
+            console.log("this is a function");
+            $.ajax({
+                type: "POST",
+                headers: { 
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json' 
+                },
+                url: "https://"+user+":"+password+"@"+user+".cloudant.com/"+dbname,
+                data: JSON.stringify(json),
+                xhrFields: {
+                  withCredentials:true
+                }
+              }).done(function(resp) {
+                console.log("done");
+                console.log(resp);
+              }).fail(function(response){
+                console.log("failed");
+                console.log(response.responseText);
+              });
         }
+    });
+    app.AppView = Backbone.View.extend({
+    	el: "#content",
+    	initialize: function(){
+    		var initFilesDrop= new app.FileDrop();
+            var initUserInputView = new app.UserInputView();
+    	}
+    });
 
-        $(document).bind('click', function(e) {
-            var $clicked = $(e.target);
-            if (! $clicked.parents().hasClass("dropdown"))
-                $("#"+id+" .dropdown dd ul").hide();
-        });
-	}
-	function documentOptions(){
-		dropDownMenu("options-delimiter");
-		dropDownMenu("options-header");
-		dropDownMenu("options-doc-load-format");
-		dropDownMenu("options-number-format");
-		dropDownMenu("options-id");
-	}
-	function start(){
-		$("#start").click(function(){
-			$("#step1").hide();
-			$("#header").hide();
-			$("#step2").show();
-		});
-	}
-	main();
+    //--------------
+    // Initializers
+    //-------------- 
+   app.appView = new app.AppView();
 });
+

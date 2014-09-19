@@ -4,7 +4,6 @@
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <title>CSV to Cloudant</title>
-        <meta name="description" content="">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <link href="https://cloudant.com/wp-content/themes/cloudant/images/favicon.png" rel="icon" type="image/png">
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet" type="text/css">
@@ -20,121 +19,40 @@
                    <form id="upload" action="index.html" method="POST" enctype="multipart/form-data"> 
                         <input type="file" id="fileselect" name="fileselect[]" multiple="multiple" />
                         <div id="file-drop-box">
-                            <div id="drop-mask">
+                            <div id="drop-mask" class="drop-mask">
                             </div>
                             <div id="instructions">
                                 Drag .csv file(s) here
-                            </div>
-                            <img id="file-icon" src="css/images/file_icon.png"/>
+                            </div>z
+                            <img id="file-icon" src="css/images/file_icon.png" > z
                         </div>
                     </form>
                     <img  id="long-arrow" src="css/images/long_arrow.png"/ >
                     <form id="user-inputs" action="#">
                         <img id="logo" src="css/images/cloudant_logo_white.png">
                         <div id="inputs">
-                            <input type="text" id="username" class="login" placeholder="username"/>
-                            <input type="password" id="password" class="login" placeholder="password"/>
-                            <input type="text" id="DBName" class="login" placeholder="database name"/>
-                        </div>
-                        <a id="start">
-                            start<img id="start-arrow" src="css/images/right_arrow.png">
-                        </a>
+                            <input type="text" id="username" placeholder="username"><input type="password" id="password" placeholder="password">
+                            <input type="text" id="DBName" placeholder="database name">
+                        <a id="start" class="start">
+                            start<img id="start-arrow" src="css/images/right_arrow.png"></a>
                     </form>
                 </div>
-            </div><!-- #step1 -->
-            <div id="step2">
-                <div id="step2-content-wrapper">
-                    <div id="options-wrapper">
-                        <div id="options-left-side">
-                            <div id="leftsidespacefiller"></div>
-                            <div id="options-delimiter" class="option-dropdown-menu">
-                                <dl  class="dropdown">
-                                    <dt><a href="#"><span>Delimiter</span></a></dt>
-                                    <dd>
-                                        <ul>
-                                            <li><a href="#">comma ( , )<span class="value">,</span></a></li>
-                                            <li><a href="#">tab ( \t )<span class="value">\t</span></a></li>
-                                            <li><a href="#">semicolon ( ; )<span class="value">;</span></a></li>
-                                            <li><a href="#">colon ( : )<span class="value">:</span></a></li>
-                                            <li><a href="#">hyphen ( - )<span class="value">-</span></a></li>
-                                        </ul>
-                                    </dd>
-                                </dl>
-                            </div>
-                            <div>
-                                File has [50] lines. Get  <input type="number" id="number-of-lines-to-get" class="options"  placeholder="all" min="0"/> lines.
-                            </div>
-                            <div id="options-header" class="option-dropdown-menu">
-                                <dl class="dropdown">
-                                    <dt><a href="#"><span>First line is header</span></a></dt>
-                                    <dd>
-                                        <ul>
-                                            <li><a href="#">First line is header<span class="value">header</span></a></li>
-                                            <li><a href="#">Load as column number<span class="value">noHeader</span></a></li>
-                                        </ul>
-                                    </dd>
-                                </dl>
-                            </div>
-                        </div>
-                        <div id="options-right-side">
+                <table>
+                    <tr>
+                        <script type="text/template" id="doc-template">
+                            <%-doc_data %>
+                        </script>
+                    </tr>
+                <table>
 
-                            <div id="div-load">
-                                <a id="load">Load<img id="start-arrow" src="css/images/right_arrow.png">
-                                </a>
-                            </div>
-                            <span id="inDBtext">In [DatabaseName] DB:</span>
-                            <div id="options-doc-load-format" class="option-dropdown-menu">
-                                <dl class="dropdown ">
-                                    <dt><a href="#"><span>One document per row</span></a></dt>
-                                    <dd>
-                                        <ul>
-                                            <li><a href="#">One document per row<span class="value">1DocPerRow</span></a></li>
-                                            <li><a href="#">One document per file<span class="value">1DocPerFile</span></a></li>
-                                        </ul>
-                                    </dd>
-                                </dl>
-                            </div>
-                            <div id="options-number-format" class="option-dropdown-menu">
-                                <dl class="dropdown">
-                                    <dt><a href="#"><span>Load numbers as numbers</span></a></dt>
-                                    <dd>
-                                        <ul>
-                                            <li><a href="#">Load numbers as numbers<span class="value">1DocPerRow</span></a></li>
-                                            <li><a href="#">Load numbers as strings<span class="value">1DocPerFile</span></a></li>
-                                        </ul>
-                                    </dd>
-                                </dl>
-                            </div>
-                            <div id="options-id" class="option-dropdown-menu">
-                                <dl class="dropdown">
-                                    <dt><a href="#"><span>_id is UUID</span></a></dt>
-                                    <dd>
-                                        <ul>
-                                            <li><a href="#">_id is UUIDs<span class="value">choose_uuid_as_id</span></a></li>
-                                            <li><a href="#">_id is first column<span class="value">choose_first_col_as_id</span></a></li>
-                                        </ul>
-                                    </dd>
-                                </dl>
-                            </div>
-                        </div>
-                    </div>
-                    <div id="preview">
-                        <table id="preview-table">
-                            <tr>
-                                <th>This is staticThis is staticThis is staticThis is static</th>
-                                <th>Lname</th> 
-                            </tr>
-                            <tr>
-                                <td>Short Row</td>
-                                <td>Smith</td> 
-                            </tr>
-                        </table>
-                    </div>
-                </div>
-            </div>
-            <div id="footer"></div><!-- #footer -->
-        </div><!-- #content -->
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+            </div><!-- #content -->
+            <div id="footer">
+            </div><!-- #footer -->
+        </div><!-- #wrapper -->
+        <script src="javascripts/jquery-1.11.1.min.js"></script>
+        <script src="javascripts/jquery.couch.js"></script>
+        <script src="javascripts/underscore-min.js"></script>
+        <script src="javascripts/backbone-min.js"></script>
         <script src="javascripts/papaparse.min.js"></script>
         <script src="javascripts/main.js"></script>
     </body>
