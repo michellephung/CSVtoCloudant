@@ -150,7 +150,6 @@ $(function(){
             return inputsAreValid;
         },
         LoadIntoCloudant: function(json, user, password, dbname){
-            console.log("this is a function");
             $.ajax({
                 type: "POST",
                 headers: { 
