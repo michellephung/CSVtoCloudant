@@ -35,7 +35,6 @@ $(function(){
 
 		//	step 1
 		dragAndDrop();
-		//inputs();
 		start();
 
 		//	step 2
@@ -51,38 +50,35 @@ $(function(){
 		}
 	}
 	function buildConfig(){
-
-	}
-	function convertToJSON(files){
-		var config,
-			data = [];
-
-		config = {
+		return {
 			delimiter: "", //leaving this blank, automatically detects delimiter
 			header: true,
 			dynamicTyping: true,
 			preview: 0,
-			step: function(results, handle) {
+			step: /*function(results, handle) {
 				console.log("Row data:", results.data[0]);
-			},
+			}*/undefined,
 			encoding: "",
 			worker: false,
 			comments: false,
-			complete: completeFn,
+			complete: function(results) {
+				console.log("Parsing complete:");
+				console.log(results);
+			},
 			error: undefined,
 			download: false,
 			keepEmptyRows: false,
 			chunk: undefined
 		};
+	}
+	function convertToJSON(files){
+		var config,
+			data = [];
+
+		config = buildConfig();
 
 		for (var i = 0, f; f = files[i]; i++) {
 			Papa.parse(f,config);
-		}
-
-		function completeFn()
-		{
-			if (arguments[0] && arguments[0].data)	numberOfRows = arguments[0].data.length;
-			preview(arguments);
 		}
 	}
 	function dragAndDrop(){
@@ -183,11 +179,6 @@ $(function(){
 		dropDownMenu("options-doc-load-format");
 		dropDownMenu("options-number-format");
 		dropDownMenu("options-id");
-	}
-	function preview(results){
-		console.log("results:");
-		console.log(results);
-
 	}
 	function start(){
 		$("#start").click(function(){

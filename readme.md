@@ -2,7 +2,9 @@
 An application which lets drag and drop .csv file into a Cloudant Database
 
 To Do:
+
 1.	Instead using a table, display cards in JSON format? or have 2 views?
+
 2.	Consider allowing different options to be chosen for each file
 
 3.	hook everything up:
