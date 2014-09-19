@@ -7,9 +7,14 @@ $(function(){
     // Models
     //--------------
     app.Doc = Backbone.Model.extend({
-    	defaults:{
-    		default: "this is one JSON doc"
-    	}
+    });
+
+    app.User = Backbone.Model.extend({
+        defaults:{
+            username: "user1",
+            password: "pw",
+            database: "dbName"
+        }
     });
 
     //--------------
@@ -29,7 +34,6 @@ $(function(){
     	initialize: function(){
     		var dropmask =$("#drop-mask"),
                 filedrag = $("#file-drop-box");
-			var xhr = new XMLHttpRequest();
 			filedrag.css("display", "block");
     	},
     	events: {
@@ -37,21 +41,42 @@ $(function(){
     		'dragleave .drop-mask': 'FileDragLeave',
     		'drop .drop-mask': 'FileDrop'
     	},
+        BuildConfig: function(){
+            return {
+                delimiter: "", //leaving this blank, automatically detects delimiter
+                header: true,
+                dynamicTyping: true,
+                preview: 2,
+                step: function(results, handle) {
+                    var json = results.data[0],
+                        newDoc = new app.Doc(json);
+                    console.log("Row data:", newDoc);
+                    app.docs.add(newDoc);
+                },
+                encoding: "",
+                worker: false,
+                comments: false,
+                complete: function() {
+                    console.log("Parsing complete");
+                },
+                error: undefined,
+                download: false,
+                keepEmptyRows: false,
+                chunk: undefined
+            };
+        },
     	FileDragHover: function(e){
     		this.StopEvents(e);
-            console.log("hover");
 			e.type == "dragover" ? $("#file-drop-box").addClass("hover") :$("#file-drop-box").removeClass();
             $('#drop-mask').show();
     	},
     	FileDragLeave: function(e){
     		this.StopEvents(e);
-            console.log("!!leave");
 			$("#file-drop-box").removeClass();
 			$('#drop-mask').hide();
     	},
     	FileDrop: function(e){
     		this.StopEvents(e);
-            console.log("dropped");
 
 			// fetch FileList object
 			var files = e.originalEvent.dataTransfer.files;
@@ -62,24 +87,84 @@ $(function(){
 			}
 			$("#file-drop-box").removeClass("hover");
 			$('#drop-mask').hide();
-    	},
-    	StopEvents: function(e){
-    		e.stopPropagation();
-			e.preventDefault();
+            for (var i = 0, f; f = files[i]; i++) {
+                Papa.parse(f,this.BuildConfig());
+            }
+
     	},
     	ParseFile: function(file){
-    		console.log(
-				"File information: " + file.name +
-				"\ntype: " + file.type +
-				"\nsize: " + file.size +" bytes"
-			);
-    	}
+            console.log(
+                "File information: " + file.name +
+                "\ntype: " + file.type +
+                "\nsize: " + file.size +" bytes"
+            );
+        },
+        StopEvents: function(e){
+    		e.stopPropagation();
+			e.preventDefault();
+    	}    	
     });
 
+    app.UserInputView = Backbone.View.extend({
+        el: "#user-inputs",
+        initialize: function(){
+
+        },
+        events:{
+            'click .start':'start'
+        },
+        start: function(){
+            console.log("you clicked start");
+            var that = this;
+            if(this.inputsAreValid()){
+
+                var u = $("#username").val(),
+                    p = $("#password").val(),
+                    d = $("#DBName").val();
+
+                app.docs.each(function(model, index){
+                    var json = model.attributes;
+                    that.LoadIntoCloudant(json, u, p, d);
+                });
+
+            }else{
+                console.log("inputs are invalid"); 
+            }
+        },
+        inputsAreValid: function(){
+            var inputsAreValid = false;
+            if( $("#username").val() != "" && $("#password").val()!= "" && $("#DBName").val()!= ""){
+                inputsAreValid = true;
+            }
+            return inputsAreValid;
+        },
+        LoadIntoCloudant: function(json, user, password, dbname){
+            console.log("this is a function");
+            $.ajax({
+                type: "POST",
+                headers: { 
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json' 
+                },
+                url: "https://"+user+":"+password+"@"+user+".cloudant.com/"+dbname,
+                data: JSON.stringify(json),
+                xhrFields: {
+                  withCredentials:true
+                }
+              }).done(function(resp) {
+                console.log("done");
+                console.log(resp);
+              }).fail(function(response){
+                console.log("failed");
+                console.log(response.responseText);
+              });
+        }
+    });
     app.AppView = Backbone.View.extend({
     	el: "#content",
     	initialize: function(){
     		var initFilesDrop= new app.FileDrop();
+            var initUserInputView = new app.UserInputView();
     	}
     });
 
