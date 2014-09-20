@@ -154,12 +154,16 @@ $(function(){
                 type: "POST",
                 headers: { 
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json' 
+                    'Content-Type': 'application/json' ,
+                    'Access-Control-Allow-Origin':'http://michellephung.github.io'
                 },
                 url: "https://"+user+":"+password+"@"+user+".cloudant.com/"+dbname,
                 data: JSON.stringify(json),
                 xhrFields: {
                   withCredentials:true
+                },
+                error: function(err){
+                    console.log(err);
                 }
               }).done(function(resp) {
                 console.log("done");
@@ -167,6 +171,7 @@ $(function(){
               }).fail(function(response){
                 console.log("failed");
                 console.log(response.responseText);
+                console.log(response);
               });
         }
     });
