@@ -155,7 +155,7 @@ $(function(){
                 type: "POST",
                 beforeSend: function(xhr) { 
                     xhr.setRequestHeader("Authorization", "Basic " + btoa(user + ":" + pass)); 
-                }
+                },
                 headers: { 
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
