@@ -149,29 +149,26 @@ $(function(){
             }
             return inputsAreValid;
         },
-        LoadIntoCloudant: function(json, user, password, dbname){
+        LoadIntoCloudant: function(jsonDoc, user, pass, dbname){
+
             $.ajax({
                 type: "POST",
+                beforeSend: function(xhr) { 
+                    xhr.setRequestHeader("Authorization", "Basic " + btoa(user + ":" + pass)); 
+                }
                 headers: { 
                     'Accept': 'application/json',
-                    'Content-Type': 'application/json' ,
-                    'Access-Control-Allow-Origin':'http://michellephung.github.io'
+                    'Content-Type': 'application/json'
                 },
-                url: "https://"+user+":"+password+"@"+user+".cloudant.com/"+dbname,
-                data: JSON.stringify(json),
+                url: "https://"+user+".cloudant.com/"+dbname,
+                data: JSON.stringify(jsonDoc),
                 xhrFields: {
                   withCredentials:true
-                },
-                error: function(err){
-                    console.log(err);
                 }
               }).done(function(resp) {
                 console.log("done");
-                console.log(resp);
               }).fail(function(response){
                 console.log("failed");
-                console.log(response.responseText);
-                console.log(response);
               });
         }
     });
