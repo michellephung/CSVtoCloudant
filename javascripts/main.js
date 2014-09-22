@@ -37,6 +37,19 @@ $(function(){
     //  Helper Functions
     //-------------------
     app.Helpers = {
+        allInputsArePresent: function(){
+            
+            var inputsAreValid = false,
+                user = app.user.name,
+                pass = app.user.password,
+                database = app.user.databaseName; ;
+
+            if( username!=="" && password!=="" && database!=="" ){
+                inputsAreValid = true;
+            }
+
+            return inputsAreValid;
+        },
         cvsToJSON: function(e){
             var buildConfig = function(){
                 return {
@@ -73,21 +86,10 @@ $(function(){
                 Papa.parse(f, config);
             };
         },
-        allInputsArePresent: function(){
-            var username = $("#username").val(),
-                password = $("#password").val(),
-                databaseName = $("#DBName").val(),
-                inputsAreValid = false;
-
-
-            if( username!=="" && password!=="" && databaseName!=="" ){
-                inputsAreValid = true;
+        loadUserDetails: function(username, password, databaseName){
                 app.user.name = username;
                 app.user.password = password;
                 app.user.databaseName = databaseName;
-            }
-
-            return inputsAreValid;
         },
         saveToCloudant: function(){
             if(app.Helpers.allInputsArePresent()){
@@ -167,6 +169,12 @@ $(function(){
         },
         start: function(){
             console.log("you clicked start");
+
+            var username = this.$("#username").val(),
+                password = this.$("#password").val(),
+                databaseName = this.$("#DBName").val();
+
+            app.Helpers.loadUserDetails(username, password, databaseName);
             app.Helpers.saveToCloudant();
         }
     });

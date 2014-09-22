@@ -9,6 +9,6 @@ To Do:
 
 3.	hook everything up:
 	1.	options to config function
-	2.	connection to cloudant
+	2.	xxxconnection to cloudantxxx
 	3.	file(s) to preview
-	4.	load button   
+	4.	xxxload buttonxxx   
