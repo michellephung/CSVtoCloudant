@@ -27,7 +27,7 @@ body {
 	background:#cfdee2;
 	padding:80px;
 }
-#step1 {
+#front-page {
 	padding-bottom:100px; /* Height of the footer element */
 	width: 99%;
 }
@@ -61,6 +61,7 @@ body {
     display:none;
     margin-left:-5px;
     margin-top: -5px;
+    
 }	
 #instructions{
 	float:left;
