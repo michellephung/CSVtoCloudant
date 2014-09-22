@@ -156,6 +156,8 @@ $(function(){
                 beforeSend: function(xhr) { 
                     xhr.setRequestHeader("Authorization", "Basic " + btoa(user + ":" + pass)); 
                 },
+                name: user,
+                password: pass,
                 headers: { 
                     'Accept': 'application/json',
                     'Content-Type': 'application/json'
