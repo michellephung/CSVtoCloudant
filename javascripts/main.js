@@ -51,7 +51,11 @@ $(function(){
             return inputsAreValid;
         },
         cvsToJSON: function(e){
-            var buildConfig = function(){
+            var config,
+                converter,
+                files;
+
+            function buildConfig(){
                 return {
                     delimiter: "", //leaving this blank, automatically detects delimiter
                     header: true,
@@ -62,7 +66,7 @@ $(function(){
                             newDoc = new app.Doc(json);
 
                         console.log("Row data:", newDoc);
-                        app.docs.add(newDoc);   //here you put into collection
+                        app.docs.add(newDoc);   //here you put into Collection
                     },
                     encoding: "",
                     worker: false,
@@ -76,15 +80,14 @@ $(function(){
                     chunk: undefined
                 };
             }
-                    
-            // fetch FileList object
-            var config = buildConfig();
-                files = e.originalEvent.dataTransfer.files;
+            function csvConverter(file) {
+                Papa.parse(file, this.config);       
+            }
+            files = e.originalEvent.dataTransfer.files; // fetch FileList object
+            config = buildConfig();
+            converter = _.bind(csvConverter, {'config': config } ); 
+            _.each(files, converter); // process all File objects
 
-            // process all File objects
-            for (var i = 0, f; f = files[i]; i++) {
-                Papa.parse(f, config);
-            };
         },
         loadUserDetails: function(username, password, databaseName){
                 app.user.name = username;
@@ -190,6 +193,6 @@ $(function(){
     //--------------
     // Initializers
     //-------------- 
-   app.appView = new app.AppView();
+    app.appView = new app.AppView();
 });
 
