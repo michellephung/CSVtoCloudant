@@ -8,15 +8,15 @@
         <link href="https://cloudant.com/wp-content/themes/cloudant/images/favicon.png" rel="icon" type="image/png">
         <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700" rel="stylesheet" type="text/css">
         <link rel="stylesheet" href="css/normalize.css">
-        <link rel="stylesheet" href="css/main.css">
+        <link rel="stylesheet" href="css/main.css">        
     </head>
     <body>
         <div id="wrapper">
             <div id="header">
             </div><!-- #header -->
             <div id="front-page">
-                <div id="content">
-                   <form id="upload" action="index.html" method="POST" enctype="multipart/form-data"> 
+                <div id="content">          
+                   <form id="upload" action="#" method="POST" enctype="multipart/form-data"> 
                         <input type="file" id="fileselect" name="fileselect[]" multiple="multiple" />
                         <div id="file-drop-box">
                             <div id="drop-mask" class="drop-mask">
@@ -24,21 +24,64 @@
                             <div id="instructions">
                                 Drag .csv file(s) here
                             </div>
-                            <img id="file-icon" src="css/images/file_icon.png" > 
+                            <img id="file-icon" src="css/images/file_icon.png" /> 
                         </div>
                     </form>
                     <img  id="long-arrow" src="css/images/long_arrow.png"/ >
+                   
+
                     <form id="user-inputs" action="#">
-                        <img id="logo" src="css/images/cloudant_logo_white.png">
+                        <img id="logo" src="css/images/cloudant_logo_white.png"/>
                         <div id="inputs">
                             <input type="text" id="username" class="login" placeholder="username">
                             <input type="password" id="password" class="login"placeholder="password">
                             <input type="text" id="DBName" class="login" placeholder="database name">
                         <a id="start" class="start">
                             start<img id="start-arrow" src="css/images/right_arrow.png"></a>
+                        </div>
                     </form>
                 </div><!-- #content -->
             </div><!-- #front-page -->
+            <div id="second-page">
+                <div id="step2-content-wrapper">
+                    <div id="options-wrapper">
+                        <div id="options-left-side">
+                            <div id="leftsidespacefiller"></div>
+                            <script type="text/template" id="dropdown-menu-template" >
+                                <div id="<%=id%>" class="option-dropdown-menu">
+                                <dl class="dropdown">
+                                    <dt><a ><span><%=title%></span></a></dt>
+                                    <dd>
+                                        <ul>
+                                            <% _.each(choices, function(choice) { %>  
+                                                <li><a href="#"><%=choice.visible%><span class="value"><%=choice.value%></span></a>
+                                                </li>
+                                            <% }); %>
+                                            
+                                        </ul>
+                                    </dd>
+                                </dl>
+                                </div>
+                            </script>
+
+                            <div id="options-delimiter"></div>
+                            <div>
+                            File has [50] lines. Get  <input type="number" id="number-of-lines-to-get" class="options"  placeholder="all" min="0"/> lines.
+                            </div>
+                            <div id="options-header"></div>
+                        </div><!--options-left-side-->
+                        <div id="options-right-side">
+                            <div id="div-load">
+                                <a id="load">Load<img id="start-arrow" src="css/images/right_arrow.png">
+                                </a>
+                            </div>
+                            <span id="inDBtext">In [DatabaseName] DB:</span>
+                            <div id="options-doc-load-format" class="option-dropdown-menu"></div>
+                            <div id="options-number-format" class="option-dropdown-menu"></div>
+                            <div id="options-id" class="option-dropdown-menu"></div>
+                        </div><!--options-right-side-->
+
+            </div><!--#second-page-->
             <div id="footer">
             </div><!-- #footer -->
         </div><!-- #wrapper -->

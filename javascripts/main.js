@@ -16,23 +16,29 @@ $(function(){
     //--------------
     // Models
     //--------------
-    app.Doc = Backbone.Model.extend({
+    app.Doc = Backbone.Model.extend({   //this will vary per file
     });
 
-    app.User = Backbone.Model.extend({
+    app.User = Backbone.Model.extend({  //credentials
+    });
+
+    app.DropDownItem = Backbone.Model.extend({  //one item per dropdown menu
     });
 
     app.user = new app.User();  //Singleton
-
     //--------------
     // Collections
     //--------------
     app.Docs = Backbone.Collection.extend({
         model: app.Doc
     });
+
+    app.DropDownMenus = Backbone.Collection.extend({
+        model: app.DropDownItem
+    });
     
     app.docs = new app.Docs();
-
+    app.dropDownMenus = new app.DropDownMenus();    
     //-------------------
     //  Helper Functions
     //-------------------
@@ -88,6 +94,69 @@ $(function(){
             converter = _.bind(csvConverter, {'config': config } ); 
             _.each(files, converter); // process all File objects
 
+        },
+        dropdownChoices: function(){
+
+            app.delim = new app.DropDownItem({
+                id: "options-delimiter",
+                title:"Delimiter",
+                choices:[
+                    {   visible:"comma ( , )",
+                        value:","
+                    },
+                    {   visible:"tab ( \t )",
+                        value:"\t"
+                    },
+                    {   visible:"semicolon",
+                        value:";"
+                    },
+                    {   visible:"colon",
+                        value:":"
+                    },
+                    {   visible:"hyphen",
+                        value:"-"
+                    }
+                ]
+            });
+            
+            app.header = new app.DropDownItem({
+                id: "options-header",
+                title:"First Line is Header",
+                choices:[
+                    {   visible:"First Line is Header",
+                        value:true
+                    },
+                    {   visible:"Load with Column Number",
+                        value:false
+                    }
+                ]
+            });
+
+            app.load_doc_by = new app.DropDownItem({
+                id: "options-doc-load-format",
+                title:"One document per row",
+                choices:[
+                    {   visible:"One document per row",
+                        value:"rows"
+                    },
+                    {   visible:"One document per file",
+                        value:"file"
+                    }
+                ]
+            });
+            app.numbers_are = new app.DropDownItem({
+                id: "options-number-format",
+                title:"Numbers are values",
+                choices:[
+                    {   visible:"Numbers are values",
+                        value:true
+                    },
+                    {   visible:"Numbers are strings",
+                        value:false
+                    }
+                ]
+            });
+            app.dropDownMenus.add([app.delim, app.header, app.load_doc_by, app.numbers_are ]);
         },
         loadUserDetails: function(username, password, databaseName){
                 app.user.name = username;
@@ -179,14 +248,72 @@ $(function(){
 
             app.Helpers.loadUserDetails(username, password, databaseName);
             app.Helpers.saveToCloudant();
+
+            $("#front-page").hide();
+            $("#header").hide();
+            $("#second-page").show();
+
         }
     });
 
+   app.DropDownView = Backbone.View.extend({
+        el: "#second-page",
+        template: _.template($("#dropdown-menu-template").html()),
+        initialize: function(options){
+            var that = this;
+             _.extend(this, _.pick(options, "variables"));
+            $(document).bind('click', function(e) {
+                var $clicked = $(e.target);
+                if (! $clicked.parents().hasClass("dropdown")){
+                    $("#"+that.id+" .dropdown dd ul").hide();
+                }   
+            });
+            this.render();
+        },
+        render: function(){
+            this.$("#"+this.id).replaceWith(this.template(this.variables));
+        },
+        events: function(){
+            var _events = {};
+            _events["click #"+this.id+" .dropdown dt a"] = "viewMenu";
+            _events["click #"+this.id+" .dropdown dd ul li a"] ="selectChoice";
+            return _events;
+        },
+        viewMenu: function(){
+            $("#"+this.id+" .dropdown dd ul").toggle();
+        },
+        selectChoice:function(e){
+            var text = e.toElement.innerHTML;
+            $("#"+this.id+" .dropdown dt a span").html(text);
+            $("#"+this.id+" .dropdown dd ul").hide();
+        },
+        getSelectedValue: function(e){
+            return $("#" + this.id).find("dt a span.value").html();
+        }
+   });
+   
+   app.dropDownMenusView = Backbone.View.extend({
+        initialize: function(){
+            app.Helpers.dropdownChoices();
+            _.each(app.dropDownMenus.models, function(i){
+                new app.DropDownView({
+                    model: app.DropDownItem,
+                    id: i.attributes.id,
+                    variables: i.attributes
+                });
+            });
+            
+
+        }
+   })
+
+   
     app.AppView = Backbone.View.extend({
         el: "#content",
         initialize: function(){
             var initFilesDrop= new app.FileDrop();
             var initUserInputView = new app.UserInputView();
+            var initdropDownMenusView = new app.dropDownMenusView();
         }
     });
 

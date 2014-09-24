@@ -117,7 +117,7 @@ input.login{
 	padding-left: 3px;
 }
 /* Second Page -----------------------------------------------*/
-#step2{
+#second-page{
 	display:none;
 }
 #step2-content-wrapper{
@@ -191,7 +191,9 @@ input.options{
 }
 .dropdown dt a:hover { 
 	color: #002c77; 
-	border: 2px solid orange;
+	color: #f3622d;
+	border: 2px solid #f3622d;
+
 }
 .dropdown dt a {
 	background:#cfdee2 url(images/down_arrow.png) no-repeat scroll right center; 
