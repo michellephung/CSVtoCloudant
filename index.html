@@ -48,7 +48,6 @@
                     <div id="options-wrapper">
                         <div id="options-left-side">
                             <div id="leftsidespacefiller"></div>
-
                             <script type="text/template" id="dropdown-menu-template" >
                                 <div id="<%=id%>" class="option-dropdown-menu">
                                 <dl class="dropdown">
@@ -65,7 +64,6 @@
                                 </dl>
                                 </div>
                             </script>
-
                             <div id="options-delimiter" class="option-dropdown-menu"></div>
                             <div>
                             File has [50] lines. Get  <input type="number" id="number-of-lines-to-get" class="options"  placeholder="all" min="0"/> lines.
@@ -85,15 +83,20 @@
                     </div><!-- #options-wrapper -->
                     <div id="preview">
                         <script type="text/template" id="table">
-                            <table id="preview-table">
                             <tr>
-                                <th><%= header%></th> 
+                                <% _.each(header, function(header_item) { %>
+                                    <th ><%= header_item %></th> 
+                                <% }); %>
                             </tr>
+                            <% _.each(rows, function(row) { %>
                             <tr>
-                                <td><%= rowValue%></td>
+                                <% _.each(row, function(row_value) { %>
+                                    <td><%= row_value %></td>
+                                <% }); %>
                             </tr>
+                            <% }); %>
                         </script>
-                        
+                        <table id="preview-table"></table>
                     </div><!--#preview-->
                 </div><!--#step2-content-wrapper -->
             </div><!--#second-page-->

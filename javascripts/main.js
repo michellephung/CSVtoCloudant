@@ -66,7 +66,7 @@ $(function(){
                     delimiter: "", //leaving this blank, automatically detects delimiter
                     header: true,
                     dynamicTyping: true,
-                    preview: 2,
+                    preview: 200,
                     step: function(results, handle) {
                         var json = results.data[0],
                             newDoc = new app.Doc(json);
@@ -300,18 +300,32 @@ $(function(){
    });
 
    app.PreviewTableView = Backbone.View.extend({
-        //loop over this
-        el:"",
+        el: "#preview-table",
+        template: _.template($("#table").html()),
         initialize: function(){
-            console.log("initialize Preview");
+            var that = this;
+            this.collection.bind("add", function(){
+                that.render();
+            });
+        },
+        getHeaderValues: function(){
+            var first = this.collection.first();
+            return Object.keys(first.toJSON());
+        },
+        getRows: function(){
+            var rows = [];
+            this.collection.each(function(row){
+                rows.push(row.toJSON());
+            }, this);
+            return rows;
         },
         render: function(){
-            this.collection.each(function(row){
-                var rowView = new RowView({ model: doc });
-                this.$el.append(rowView.el);
-            }, this);
+            var values = {
+                header: this.getHeaderValues(),
+                rows: this.getRows()
+            }
+            this.$el.html(this.template(values), values);
         }
-
    });
 
     app.AppView = Backbone.View.extend({
@@ -319,7 +333,7 @@ $(function(){
             var initFilesDrop= new app.FileDrop();
             var initUserInputView = new app.UserInputView();
             var initdropDownMenusView = new app.DropDownMenusView();
-            var initPreviewTable = new app.PreviewTableView();
+            var initPreviewTable = new app.PreviewTableView({ collection: app.docs });
         }
     });
 
