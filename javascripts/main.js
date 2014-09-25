@@ -239,19 +239,15 @@ $(function(){
             'click .start' : 'start'
         },
         start: function(){
-            console.log("you clicked start");
-
             var username = this.$("#username").val(),
                 password = this.$("#password").val(),
                 databaseName = this.$("#DBName").val();
 
             app.Helpers.loadUserDetails(username, password, databaseName);
-            app.Helpers.saveToCloudant();
 
             $("#front-page").hide();
             $("#header").hide();
             $("#second-page").show();
-
         }
     });
 
@@ -334,6 +330,10 @@ $(function(){
             var initUserInputView = new app.UserInputView();
             var initdropDownMenusView = new app.DropDownMenusView();
             var initPreviewTable = new app.PreviewTableView({ collection: app.docs });
+            $('#load').click(function(){
+                console.log("you clicked load");
+                app.Helpers.saveToCloudant();
+            })
         }
     });
 
