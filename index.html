@@ -43,10 +43,12 @@
                 </div><!-- #content -->
             </div><!-- #front-page -->
             <div id="second-page">
+                this is still in production
                 <div id="step2-content-wrapper">
                     <div id="options-wrapper">
                         <div id="options-left-side">
                             <div id="leftsidespacefiller"></div>
+
                             <script type="text/template" id="dropdown-menu-template" >
                                 <div id="<%=id%>" class="option-dropdown-menu">
                                 <dl class="dropdown">
@@ -64,11 +66,11 @@
                                 </div>
                             </script>
 
-                            <div id="options-delimiter"></div>
+                            <div id="options-delimiter" class="option-dropdown-menu"></div>
                             <div>
                             File has [50] lines. Get  <input type="number" id="number-of-lines-to-get" class="options"  placeholder="all" min="0"/> lines.
                             </div>
-                            <div id="options-header"></div>
+                            <div id="options-header" class="option-dropdown-menu"></div>
                         </div><!--options-left-side-->
                         <div id="options-right-side">
                             <div id="div-load">
@@ -80,7 +82,20 @@
                             <div id="options-number-format" class="option-dropdown-menu"></div>
                             <div id="options-id" class="option-dropdown-menu"></div>
                         </div><!--options-right-side-->
-
+                    </div><!-- #options-wrapper -->
+                    <div id="preview">
+                        <script type="text/template" id="table">
+                            <table id="preview-table">
+                            <tr>
+                                <th><%= header%></th> 
+                            </tr>
+                            <tr>
+                                <td><%= rowValue%></td>
+                            </tr>
+                        </script>
+                        
+                    </div><!--#preview-->
+                </div><!--#step2-content-wrapper -->
             </div><!--#second-page-->
             <div id="footer">
             </div><!-- #footer -->

@@ -70,7 +70,6 @@ $(function(){
                     step: function(results, handle) {
                         var json = results.data[0],
                             newDoc = new app.Doc(json);
-
                         console.log("Row data:", newDoc);
                         app.docs.add(newDoc);   //here you put into Collection
                     },
@@ -95,7 +94,7 @@ $(function(){
             _.each(files, converter); // process all File objects
 
         },
-        dropdownChoices: function(){
+        loadDropdownChoices: function(){
 
             app.delim = new app.DropDownItem({
                 id: "options-delimiter",
@@ -104,16 +103,16 @@ $(function(){
                     {   visible:"comma ( , )",
                         value:","
                     },
-                    {   visible:"tab ( \t )",
+                    {   visible:"tab ( [tab] )",
                         value:"\t"
                     },
-                    {   visible:"semicolon",
+                    {   visible:"semicolon ( ; )",
                         value:";"
                     },
-                    {   visible:"colon",
+                    {   visible:"colon ( ; )",
                         value:":"
                     },
-                    {   visible:"hyphen",
+                    {   visible:"hyphen ( - )",
                         value:"-"
                     }
                 ]
@@ -257,63 +256,70 @@ $(function(){
     });
 
    app.DropDownView = Backbone.View.extend({
-        el: "#second-page",
         template: _.template($("#dropdown-menu-template").html()),
-        initialize: function(options){
-            var that = this;
-             _.extend(this, _.pick(options, "variables"));
+        initialize: function(){
             $(document).bind('click', function(e) {
                 var $clicked = $(e.target);
                 if (! $clicked.parents().hasClass("dropdown")){
-                    $("#"+that.id+" .dropdown dd ul").hide();
+                    $(".dropdown dd ul").hide();
                 }   
             });
             this.render();
         },
         render: function(){
-            this.$("#"+this.id).replaceWith(this.template(this.variables));
+            this.$el.html(this.template(this.model.toJSON()));
         },
-        events: function(){
-            var _events = {};
-            _events["click #"+this.id+" .dropdown dt a"] = "viewMenu";
-            _events["click #"+this.id+" .dropdown dd ul li a"] ="selectChoice";
-            return _events;
+        events:{
+            'click .dropdown dt a': 'viewMenu',
+            'click .dropdown dd ul li a': 'selectChoice'
         },
         viewMenu: function(){
-            $("#"+this.id+" .dropdown dd ul").toggle();
+            this.$el.find(".dropdown dd ul").toggle();
         },
         selectChoice:function(e){
             var text = e.toElement.innerHTML;
-            $("#"+this.id+" .dropdown dt a span").html(text);
-            $("#"+this.id+" .dropdown dd ul").hide();
+            this.$(".dropdown dt a span").html(text);
+            this.$(".dropdown dd ul").hide();
         },
         getSelectedValue: function(e){
-            return $("#" + this.id).find("dt a span.value").html();
+            return this.$el.find("dt a span.value").html();
         }
    });
    
-   app.dropDownMenusView = Backbone.View.extend({
+   app.DropDownMenusView = Backbone.View.extend({
         initialize: function(){
-            app.Helpers.dropdownChoices();
-            _.each(app.dropDownMenus.models, function(i){
-                new app.DropDownView({
-                    model: app.DropDownItem,
-                    id: i.attributes.id,
-                    variables: i.attributes
+            app.Helpers.loadDropdownChoices();
+            app.dropDownMenus.each(function(menu){
+                  new app.DropDownView({
+                    model: menu,
+                    el:$("#"+menu.get('id')),
+                    id: menu.get('id')
                 });
-            });
-            
-
+            })
         }
-   })
+   });
 
-   
+   app.PreviewTableView = Backbone.View.extend({
+        //loop over this
+        el:"",
+        initialize: function(){
+            console.log("initialize Preview");
+        },
+        render: function(){
+            this.collection.each(function(row){
+                var rowView = new RowView({ model: doc });
+                this.$el.append(rowView.el);
+            }, this);
+        }
+
+   });
+
     app.AppView = Backbone.View.extend({
-        el: "#content",
         initialize: function(){
             var initFilesDrop= new app.FileDrop();
             var initUserInputView = new app.UserInputView();
-            var initdropDownMenusView = new app.dropDownMenusView();
+            var initdropDownMenusView = new app.DropDownMenusView();
+            var initPreviewTable = new app.PreviewTableView();
         }
     });
 
