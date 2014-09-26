@@ -51,6 +51,7 @@ $(function(){
     };
     app.totalRowsInFiles = 0;
     app.theFiles = undefined;
+    app.doneParsing = false;
 
     app.Helpers = {
         allInputsArePresent: function(){
@@ -76,18 +77,19 @@ $(function(){
                     delimiter: app.userSelections['options-delimiter'], //leaving this blank, automatically detects delimiter
                     header: app.userSelections['options-header'],
                     dynamicTyping: app.userSelections['options-number-format'],
-                    preview: app.userSelections['options-number-of-lines'],
+                    preview: parseInt(app.userSelections['options-number-of-lines']),
                     step: function(results, handle) {
                         var json = results.data[0],
                             newDoc = new app.Doc(json);
-                        console.log("Row data:", newDoc);
-                        app.docs.add(newDoc);   //here you put into Collection
-                        app.totalRowsInFiles++;
+                        app.docs.add(newDoc);   //put each row into Collection
+                        if(!app.doneParsing) app.totalRowsInFiles++;
                     },
                     encoding: "",
                     worker: false,
                     comments: false,
-                    complete: function() {},
+                    complete: function() {
+
+                    },
                     error: undefined,
                     download: false,
                     keepEmptyRows: false,
@@ -209,14 +211,10 @@ $(function(){
             }
         },
         updatePreview: function(){
-            console.log("1 -- update Preview");
             app.docs.reset();
-            console.log("2 -- update Preview");
+            app.doneParsing = true;
             app.Helpers.cvsToJSON();
-            console.log("3 -- update Preview");
             new app.PreviewTableView({ collection: app.docs });
-            console.log("4 -- update Preview");
-
         },
         updateUserSelections: function(id, choice){
 
@@ -286,8 +284,6 @@ $(function(){
             $("#header").hide();
             var initOptionsMenusView = new app.OptionsView();
             $("#second-page").show();
-            
-
         }
     });
 
@@ -339,7 +335,6 @@ $(function(){
                 });
             });
         }
-
    });
 
    app.HowManyRowsView = Backbone.View.extend({
@@ -356,11 +351,9 @@ $(function(){
             "change input" : "update"
         },
         update: function(){
-           // console.log(this.$el.attr('id'),this.$('#number-of-lines-to-get').val() );
-           // app.Helpers.updateUserSelections(this.$el.attr('id'), this.$('#number-of-lines-to-get').val());
-           // app.Helpers.updatePreview();
+            app.Helpers.updateUserSelections(this.$el.attr('id'), this.$('#number-of-lines-to-get').val());
+            app.Helpers.updatePreview();
         }
-
    });
 
    app.PreviewTableView = Backbone.View.extend({
@@ -371,7 +364,6 @@ $(function(){
             this.$el.html("");
             this.collection.bind("add", function(){
                 that.render();
-                console.log("addPreviewTableView");
             });
         },
         getHeaderValues: function(){
