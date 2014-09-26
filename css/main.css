@@ -294,6 +294,12 @@ th, td {
 	font-size: 18px;
 	font-family: 'Source Sans Pro', sans-serif;
 }
+#load_fail{
+	color:red;
+}
+#load_success{
+	color: green;
+}
 
 #footer {
 	background-color: #002c77;

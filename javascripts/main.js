@@ -75,22 +75,23 @@ $(function(){
                   withCredentials:true
                 }
             }).done(function(resp) {  
-                console.log("done");    
+                console.log("done");  
+                $('#load').html("<span id='load_success'>Loaded!</span>");  
+
             }).fail(function(response){   
-                console.log("failed");  
+                console.log("failed"); 
+                $('#load').html("<span id='load_fail'>Failed</span>");
             });
         },
         allInputsArePresent: function(username, password, databaseName){
             
             var inputsAreValid = false,
                 files = app.theFiles;
-
             if( username!=="" && password!=="" && databaseName!=="" && files !== undefined ){
                 inputsAreValid = true;
                 app.user.name = username;
                 app.user.password = password;
                 app.user.databaseName = databaseName;
-
             }
             return inputsAreValid;
         },
@@ -192,27 +193,22 @@ $(function(){
             });
             app.dropDownMenus.add([app.delim, app.header, app.load_doc_by, app.numbers_are ]);
         },
-        saveToCloudant: function(){
-            if(app.Helpers.allInputsArePresent()){
-                
-                var user = app.user.name,
-                    pass = app.user.password,
-                    database = app.user.databaseName; 
+        saveToCloudant: function(){    
+            var user = app.user.name,
+                pass = app.user.password,
+                database = app.user.databaseName; 
 
-                if(app.userSelections["options-doc-load-format"] ==  "file"){
-                    app.Helpers.ajaxCalltoCloudant(JSON.stringify(app.oneDoc), user, pass, database);
-                }else{
-                    app.docs.each(function(model, index){
-                        var json = model.toJSON();
-                        app.Helpers.ajaxCalltoCloudant(
-                            JSON.stringify(json), 
-                            user, pass, database
-                            )
-                        ;
-                    });
-                }
+            if(app.userSelections["options-doc-load-format"] ==  "file"){
+                app.Helpers.ajaxCalltoCloudant(JSON.stringify(app.oneDoc), user, pass, database);
             }else{
-                console.log("inputs are invalid"); 
+                app.docs.each(function(model, index){
+                    var json = model.toJSON();
+                    app.Helpers.ajaxCalltoCloudant(
+                        JSON.stringify(json), 
+                        user, pass, database
+                        )
+                    ;
+                });
             }
         },
         updatePreview: function(){
@@ -286,6 +282,7 @@ $(function(){
                 databaseName = this.$("#DBName").val();
 
             if(app.Helpers.allInputsArePresent(username, password, databaseName )){
+
                 $("#front-page, #header").hide();
                 new app.OptionsView();
                 $("#second-page").show();
@@ -459,6 +456,11 @@ $(function(){
         },
         load: function(){
             app.Helpers.saveToCloudant();
+            this.undelegateEvents();
+            this.$el.html("Loading...");
+            this.$el.hover(function(){
+                $(this).css('text-decoration', 'none');
+            });
         }
    });
 
