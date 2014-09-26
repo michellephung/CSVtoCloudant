@@ -114,6 +114,9 @@ $(function(){
                             app.oneDoc.data[Object.keys(app.oneDoc.data).length]=json;
                         }
                         if(!app.doneParsing) app.totalRowsInFiles++;
+                    },
+                    complete:function(){
+                        $('#instructions').html("File Loaded");
                     }
                 };
             }
@@ -259,7 +262,7 @@ $(function(){
         },
         FileDrop: function(e){
             this.FileDragLeave(e);
-            this.$('#instructions').html("File captured");
+            this.$('#instructions').html("File loading...");
             this.$el.css("border-style", "solid");
             this.undelegateEvents();    //unbinds events for file drop, refresh page to add a different file
             app.theFiles = e.originalEvent.dataTransfer.files;  // attaches file to app object
