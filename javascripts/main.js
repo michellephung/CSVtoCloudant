@@ -39,9 +39,19 @@ $(function(){
     
     app.docs = new app.Docs();
     app.dropDownMenus = new app.DropDownMenus();    
+
     //-------------------
     //  Helper Functions
     //-------------------
+    app.userSelections = {
+        "options-delimiter": undefined,
+        "options-number-of-lines": 7,
+        "options-header": true,
+        "options-number-format": true
+    };
+    app.totalRowsInFiles = 0;
+    app.theFiles = undefined;
+
     app.Helpers = {
         allInputsArePresent: function(){
             
@@ -56,29 +66,28 @@ $(function(){
 
             return inputsAreValid;
         },
-        cvsToJSON: function(e){
+        cvsToJSON: function(){
             var config,
                 converter,
                 files;
 
             function buildConfig(){
                 return {
-                    delimiter: "", //leaving this blank, automatically detects delimiter
-                    header: true,
-                    dynamicTyping: true,
-                    preview: 200,
+                    delimiter: app.userSelections['options-delimiter'], //leaving this blank, automatically detects delimiter
+                    header: app.userSelections['options-header'],
+                    dynamicTyping: app.userSelections['options-number-format'],
+                    preview: app.userSelections['options-number-of-lines'],
                     step: function(results, handle) {
                         var json = results.data[0],
                             newDoc = new app.Doc(json);
                         console.log("Row data:", newDoc);
                         app.docs.add(newDoc);   //here you put into Collection
+                        app.totalRowsInFiles++;
                     },
                     encoding: "",
                     worker: false,
                     comments: false,
-                    complete: function() {
-                        console.log("toJSON complete");
-                    },
+                    complete: function() {},
                     error: undefined,
                     download: false,
                     keepEmptyRows: false,
@@ -88,7 +97,8 @@ $(function(){
             function csvConverter(file) {
                 Papa.parse(file, this.config);       
             }
-            files = e.originalEvent.dataTransfer.files; // fetch FileList object
+
+            files = app.theFiles; // fetch FileList object
             config = buildConfig();
             converter = _.bind(csvConverter, {'config': config } ); 
             _.each(files, converter); // process all File objects
@@ -110,7 +120,7 @@ $(function(){
                         value:";"
                     },
                     {   visible:"colon ( ; )",
-                        value:":"
+                        value:";"
                     },
                     {   visible:"hyphen ( - )",
                         value:"-"
@@ -197,6 +207,28 @@ $(function(){
             }else{
                 console.log("inputs are invalid"); 
             }
+        },
+        updatePreview: function(){
+            console.log("1 -- update Preview");
+            app.docs.reset();
+            console.log("2 -- update Preview");
+            app.Helpers.cvsToJSON();
+            console.log("3 -- update Preview");
+            new app.PreviewTableView({ collection: app.docs });
+            console.log("4 -- update Preview");
+
+        },
+        updateUserSelections: function(id, choice){
+
+            var userchoice = choice;
+
+            if(choice == "true"){
+                userchoice = true;
+            }
+            if(choice == "false"){
+                userchoice = false;
+            }
+            app.userSelections[id] = userchoice;
         }
     }
 
@@ -225,7 +257,12 @@ $(function(){
         },
         FileDrop: function(e){
             this.FileDragLeave(e);
-            app.Helpers.cvsToJSON(e);   // puts CVS into Model
+            this.$('#instructions').html("File captured");
+            this.$el.css("border-style", "solid");
+            this.undelegateEvents();
+           
+            app.theFiles = e.originalEvent.dataTransfer.files;
+            app.Helpers.cvsToJSON();   // puts CVS into Model
         },
         StopEvents: function(e){
             e.stopPropagation();
@@ -247,7 +284,10 @@ $(function(){
 
             $("#front-page").hide();
             $("#header").hide();
+            var initOptionsMenusView = new app.OptionsView();
             $("#second-page").show();
+            
+
         }
     });
 
@@ -276,14 +316,20 @@ $(function(){
             var text = e.toElement.innerHTML;
             this.$(".dropdown dt a span").html(text);
             this.$(".dropdown dd ul").hide();
+
+            app.Helpers.updateUserSelections(this.id, this.getSelectedValue());
+            app.Helpers.updatePreview();
         },
         getSelectedValue: function(e){
             return this.$el.find("dt a span.value").html();
         }
    });
    
-   app.DropDownMenusView = Backbone.View.extend({
+   app.OptionsView = Backbone.View.extend({
         initialize: function(){
+
+            var initNumberOfRows = new app.HowManyRowsView();
+
             app.Helpers.loadDropdownChoices();
             app.dropDownMenus.each(function(menu){
                   new app.DropDownView({
@@ -291,8 +337,30 @@ $(function(){
                     el:$("#"+menu.get('id')),
                     id: menu.get('id')
                 });
-            })
+            });
         }
+
+   });
+
+   app.HowManyRowsView = Backbone.View.extend({
+        el: "#options-number-of-lines",
+        initialize: function(){ 
+            var totalLines = app.totalRowsInFiles;
+            this.$('#number-of-lines-to-get').attr({
+                min: 1,
+                max: totalLines
+            });
+            this.$('#number-of-lines').html(totalLines);
+        },
+        events:{
+            "change input" : "update"
+        },
+        update: function(){
+           // console.log(this.$el.attr('id'),this.$('#number-of-lines-to-get').val() );
+           // app.Helpers.updateUserSelections(this.$el.attr('id'), this.$('#number-of-lines-to-get').val());
+           // app.Helpers.updatePreview();
+        }
+
    });
 
    app.PreviewTableView = Backbone.View.extend({
@@ -300,8 +368,10 @@ $(function(){
         template: _.template($("#table").html()),
         initialize: function(){
             var that = this;
+            this.$el.html("");
             this.collection.bind("add", function(){
                 that.render();
+                console.log("addPreviewTableView");
             });
         },
         getHeaderValues: function(){
@@ -324,16 +394,24 @@ $(function(){
         }
    });
 
+   app.LoadButtonView = Backbone.View.extend({
+        el: $("#load"),
+        events:{
+            'click': 'load'
+        },
+        load: function(){
+            app.Helpers.saveToCloudant();
+        }
+   });
+
     app.AppView = Backbone.View.extend({
         initialize: function(){
             var initFilesDrop= new app.FileDrop();
             var initUserInputView = new app.UserInputView();
-            var initdropDownMenusView = new app.DropDownMenusView();
+            
             var initPreviewTable = new app.PreviewTableView({ collection: app.docs });
-            $('#load').click(function(){
-                console.log("you clicked load");
-                app.Helpers.saveToCloudant();
-            })
+            var initLoadButton = new app.LoadButtonView();
+            
         }
     });
 
