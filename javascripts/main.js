@@ -47,13 +47,38 @@ $(function(){
         "options-delimiter": undefined,
         "options-number-of-lines": undefined,
         "options-header": true,
+        "options-doc-load-format": "rows",
         "options-number-format": true
     };
-    app.totalRowsInFiles = 0;
+    app.totalRowsInFiles = 1;   //intially starts with file having a header line
     app.theFiles = undefined;
     app.doneParsing = false;
+    app.oneDoc = { data: {} };
 
     app.Helpers = {
+        ajaxCalltoCloudant: function(data, user, pass, database){
+            $.ajax({
+                type: "POST",
+                beforeSend: function(xhr) { 
+                    xhr.setRequestHeader("Authorization", "Basic " + btoa(user + ":" + pass)); 
+                },
+                name: user,
+                password: pass,
+                headers: { 
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                url: "https://"+user+".cloudant.com/"+database,
+                data: data,
+                xhrFields: {
+                  withCredentials:true
+                }
+            }).done(function(resp) {  
+                console.log("done");    
+            }).fail(function(response){   
+                console.log("failed");  
+            });
+        },
         allInputsArePresent: function(){
             
             var inputsAreValid = false,
@@ -81,6 +106,9 @@ $(function(){
                         var json = results.data[0],
                             newDoc = new app.Doc(json);
                         app.docs.add(newDoc);   
+                        if(app.userSelections["options-doc-load-format"] ==  "file"){
+                            app.oneDoc.data[Object.keys(app.oneDoc.data).length]=json;
+                        }
                         if(!app.doneParsing) app.totalRowsInFiles++;
                     }
                 };
@@ -88,7 +116,7 @@ $(function(){
             function csvConverter(file) {
                 Papa.parse(file, this.config);       
             }
-
+            app.oneDoc.data = {};   //clear data
             files = app.theFiles;       // fetch FileList object
             config = buildConfig();
             converter = _.bind(csvConverter, {'config': config } ); 
@@ -172,32 +200,19 @@ $(function(){
                 var user = app.user.name,
                     pass = app.user.password,
                     database = app.user.databaseName; 
-                
-                app.docs.each(function(model, index){
-                    var json = model.attributes;
-                    
-                    $.ajax({
-                        type: "POST",
-                        beforeSend: function(xhr) { 
-                            xhr.setRequestHeader("Authorization", "Basic " + btoa(user + ":" + pass)); 
-                        },
-                        name: user,
-                        password: pass,
-                        headers: { 
-                            'Accept': 'application/json',
-                            'Content-Type': 'application/json'
-                        },
-                        url: "https://"+user+".cloudant.com/"+database,
-                        data: JSON.stringify(json),
-                        xhrFields: {
-                          withCredentials:true
-                        }
-                    }).done(function(resp) {  
-                        console.log("done");    
-                    }).fail(function(response){   
-                        console.log("failed");  
+
+                if(app.userSelections["options-doc-load-format"] ==  "file"){
+                    app.Helpers.ajaxCalltoCloudant(JSON.stringify(app.oneDoc), user, pass, database);
+                }else{
+                    app.docs.each(function(model, index){
+                        var json = model.toJSON();
+                        app.Helpers.ajaxCalltoCloudant(
+                            JSON.stringify(json), 
+                            user, pass, database
+                            )
+                        ;
                     });
-                });
+                }
             }else{
                 console.log("inputs are invalid"); 
             }
@@ -268,12 +283,14 @@ $(function(){
             'click .start' : 'start'
         },
         start: function(){
+//----------------------------------------------------------------- fix this
             var username = this.$("#username").val(),
                 password = this.$("#password").val(),
                 databaseName = this.$("#DBName").val();
 
             app.Helpers.loadUserDetails(username, password, databaseName);
-//----------------------------------------------------------------- fix this
+
+
             $("#front-page, #header").hide();
             new app.OptionsView();
             $("#second-page").show();
@@ -390,15 +407,16 @@ $(function(){
             });
         },
         render: function(){
-            var rows=[];
-            console.log(this.collection);
-            this.collection.each(function(row){
-              rows.push(JSON.stringify(row.toJSON(),null, 5));
-            }, this);
-
-            var values = {docs: rows};
+            var rows=[], values;
+            if(app.userSelections["options-doc-load-format"] ==  "rows"){
+                this.collection.each(function(row){
+                    rows.push(JSON.stringify(row.toJSON(),null, 5));
+                });
+                values = {docs: rows};
+            }else{
+                values = {docs: [ JSON.stringify(app.oneDoc,null, 5)  ]};
+            }
             this.$el.html(this.template(values));
-
         }
    });
 

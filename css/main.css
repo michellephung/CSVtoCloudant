@@ -244,18 +244,16 @@ input.options{
 	padding: 30px;
 	margin-bottom: 150px;
 	overflow-x: scroll; 
-}
-            
-#viewSelection{
-	text-align: center;
-	color:#002c77;
-} 
-
+}  
 #viewSelection a:hover{
 	text-decoration: underline;
 }  
 #selections{
+	text-align: center;
 	padding-bottom: 10px;
+	color: #002c77;
+	width: 1000px; 
+	margin: auto;
 }         
 
 #preview-table{
@@ -287,6 +285,8 @@ th, td {
 	padding: 40px;
 	margin-top: -50px;
 	text-align: left;
+	font-size: 18px;
+	font-family: 'Source Sans Pro', sans-serif;
 }
 
 #footer {
