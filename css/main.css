@@ -116,6 +116,12 @@ input.login{
 	width:10px;
 	padding-left: 3px;
 }
+#startErrorMessage{
+	font-size: 16px;
+	margin-left: 40px;
+	margin-top: 40px;
+	color: #9E2323;
+}
 /* Second Page -----------------------------------------------*/
 #second-page{
 	display:none;

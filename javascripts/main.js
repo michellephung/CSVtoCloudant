@@ -50,6 +50,7 @@ $(function(){
         "options-doc-load-format": "rows",
         "options-number-format": true
     };
+
     app.totalRowsInFiles = 1;   //intially starts with file having a header line
     app.theFiles = undefined;
     app.doneParsing = false;
@@ -79,15 +80,17 @@ $(function(){
                 console.log("failed");  
             });
         },
-        allInputsArePresent: function(){
+        allInputsArePresent: function(username, password, databaseName){
             
             var inputsAreValid = false,
-                user = app.user.name,
-                pass = app.user.password,
-                database = app.user.databaseName;
+                files = app.theFiles;
 
-            if( username!=="" && password!=="" && database!=="" ){
+            if( username!=="" && password!=="" && databaseName!=="" && files !== undefined ){
                 inputsAreValid = true;
+                app.user.name = username;
+                app.user.password = password;
+                app.user.databaseName = databaseName;
+
             }
             return inputsAreValid;
         },
@@ -189,11 +192,6 @@ $(function(){
             });
             app.dropDownMenus.add([app.delim, app.header, app.load_doc_by, app.numbers_are ]);
         },
-        loadUserDetails: function(username, password, databaseName){
-                app.user.name = username;
-                app.user.password = password;
-                app.user.databaseName = databaseName;
-        },
         saveToCloudant: function(){
             if(app.Helpers.allInputsArePresent()){
                 
@@ -283,18 +281,33 @@ $(function(){
             'click .start' : 'start'
         },
         start: function(){
-//----------------------------------------------------------------- fix this
             var username = this.$("#username").val(),
                 password = this.$("#password").val(),
                 databaseName = this.$("#DBName").val();
 
-            app.Helpers.loadUserDetails(username, password, databaseName);
+            if(app.Helpers.allInputsArePresent(username, password, databaseName )){
+                $("#front-page, #header").hide();
+                new app.OptionsView();
+                $("#second-page").show();
+            }else{
+                var errorMessage = "";
 
+                if(app.theFiles == undefined){
+                    errorMessage = "No File attached. <br>";
+                }
+                if(username == ""){
+                    errorMessage += "Please enter your username. <br>";
+                }
+                if(password == ""){
+                    errorMessage += "Please enter your password. <br>";
+                }
+                if(databaseName == ""){
+                    errorMessage += "Please enter your database name. <br>";
+                }
 
-            $("#front-page, #header").hide();
-            new app.OptionsView();
-            $("#second-page").show();
-//----------------------------------------------------------------
+                this.$('#startErrorMessage').html(errorMessage);
+            }
+            
         }
     });
 
