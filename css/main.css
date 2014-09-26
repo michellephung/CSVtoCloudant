@@ -245,6 +245,19 @@ input.options{
 	margin-bottom: 150px;
 	overflow-x: scroll; 
 }
+            
+#viewSelection{
+	text-align: center;
+	color:#002c77;
+} 
+
+#viewSelection a:hover{
+	text-decoration: underline;
+}  
+#selections{
+	padding-bottom: 10px;
+}         
+
 #preview-table{
 	width: 100%;
 }
@@ -268,6 +281,14 @@ th, td {
 	overflow: hidden;
   	text-overflow: ellipsis;
 }
+.JSONdoc{
+	border: 2px solid #999;
+	color: #999;
+	padding: 40px;
+	margin-top: -50px;
+	text-align: left;
+}
+
 #footer {
 	background-color: #002c77;
 	width:100%;

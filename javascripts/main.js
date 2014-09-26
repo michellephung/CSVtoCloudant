@@ -45,7 +45,7 @@ $(function(){
     //-------------------
     app.userSelections = {
         "options-delimiter": undefined,
-        "options-number-of-lines": 6,
+        "options-number-of-lines": undefined,
         "options-header": true,
         "options-number-format": true
     };
@@ -59,12 +59,11 @@ $(function(){
             var inputsAreValid = false,
                 user = app.user.name,
                 pass = app.user.password,
-                database = app.user.databaseName; ;
+                database = app.user.databaseName;
 
             if( username!=="" && password!=="" && database!=="" ){
                 inputsAreValid = true;
             }
-
             return inputsAreValid;
         },
         cvsToJSON: function(){
@@ -94,7 +93,6 @@ $(function(){
             config = buildConfig();
             converter = _.bind(csvConverter, {'config': config } ); 
             _.each(files, converter);   // process all File objects
-
         },
         loadDropdownChoices: function(){
 
@@ -255,7 +253,6 @@ $(function(){
             this.$('#instructions').html("File captured");
             this.$el.css("border-style", "solid");
             this.undelegateEvents();    //unbinds events for file drop, refresh page to add a different file
-           
             app.theFiles = e.originalEvent.dataTransfer.files;  // attaches file to app object
             app.Helpers.cvsToJSON();   // puts CVS into Model
         },
@@ -277,9 +274,8 @@ $(function(){
 
             app.Helpers.loadUserDetails(username, password, databaseName);
 //----------------------------------------------------------------- fix this
-            $("#front-page").hide();
-            $("#header").hide();
-            var initOptionsMenusView = new app.OptionsView();
+            $("#front-page, #header").hide();
+            new app.OptionsView();
             $("#second-page").show();
 //----------------------------------------------------------------
         }
@@ -320,9 +316,11 @@ $(function(){
    });
    
    app.OptionsView = Backbone.View.extend({
+        el: '#options-wrapper',
         initialize: function(){
             new app.HowManyRowsView();
             app.Helpers.loadDropdownChoices();
+            this.$('#loadIntoDBName').html(app.user.databaseName);
             app.dropDownMenus.each(function(menu){
                 new app.DropDownView({  
                             model: menu,
@@ -378,12 +376,53 @@ $(function(){
                 header: this.getHeaderValues(),
                 rows: this.getRows()
             }
-            this.$el.html(this.template(values), values);
+            this.$el.html(this.template(values));
+        }
+   });
+
+   app.JSONView = Backbone.View.extend({
+        el:"#JSONView",
+        template: _.template($('#JSONView-template').html()),
+        initialize: function(){
+            var that = this;
+            this.collection.bind("add", function(){
+                that.render();
+            });
+        },
+        render: function(){
+            var rows=[];
+            console.log(this.collection);
+            this.collection.each(function(row){
+              rows.push(JSON.stringify(row.toJSON(),null, 5));
+            }, this);
+
+            var values = {docs: rows};
+            this.$el.html(this.template(values));
+
+        }
+   });
+
+   app.previewSelectionView = Backbone.View.extend({
+        el:"#viewSelection",
+        initialize: function(){
+            $("#JSONView").hide();
+        },
+        events:{
+            "click #viewTable": "viewTable",
+            "click #viewJSON": "viewJSON"
+        },
+        viewJSON: function(){
+            this.$("#preview-table").hide();
+            this.$("#JSONView").show();
+        },
+        viewTable: function(){;
+            this.$("#JSONView").hide();
+            this.$("#preview-table").show();
         }
    });
 
    app.LoadButtonView = Backbone.View.extend({
-        el: $("#load"),
+        el: "#load",
         events:{
             'click': 'load'
         },
@@ -397,8 +436,9 @@ $(function(){
             new app.FileDrop();
             new app.UserInputView();
             new app.PreviewTableView({ collection: app.docs });
+            new app.JSONView({ collection: app.docs });
             new app.LoadButtonView();
-            
+            new app.previewSelectionView();
         }
     });
 

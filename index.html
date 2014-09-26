@@ -28,8 +28,6 @@
                         </div>
                     </form>
                     <img  id="long-arrow" src="css/images/long_arrow.png"/ >
-                   
-
                     <form id="user-inputs" action="#">
                         <img id="logo" src="css/images/cloudant_logo_white.png"/>
                         <div id="inputs">
@@ -64,18 +62,9 @@
                                 </div>
                             </script>
                             <div id="options-delimiter" class="option-dropdown-menu"></div>
-
-
-
-
                             <div id="options-number-of-lines">
                             File has <span id="number-of-lines">0</span> lines. Get  <input type="number" id="number-of-lines-to-get" class="options"  placeholder="all" min="1"/> lines.
                             </div>
-
-
-
-
-
                             <div id="options-header" class="option-dropdown-menu"></div>
                         </div><!--options-left-side-->
                         <div id="options-right-side">
@@ -83,29 +72,41 @@
                                 <a id="load">Load<img id="start-arrow" src="css/images/right_arrow.png">
                                 </a>
                             </div>
-                            <span id="inDBtext">In [DatabaseName] DB:</span>
+                            <span id="inDBtext">In <span id="loadIntoDBName">[DatabaseName]</span> DB:</span>
                             <div id="options-doc-load-format" class="option-dropdown-menu"></div>
                             <div id="options-number-format" class="option-dropdown-menu"></div>
                             <div id="options-id" class="option-dropdown-menu"></div>
                         </div><!--options-right-side-->
                     </div><!-- #options-wrapper -->
-                    <div id="preview">
-                        <script type="text/template" id="table">
-                            <tr>
-                                <% _.each(header, function(header_item) { %>
-                                    <th ><%= header_item %></th> 
+                    <div id="viewSelection">
+                        <div id="selections"><a id="viewTable">table</a> | <a id="viewJSON">JSON</a></div>
+                        <div id="preview">
+                            <script type="text/template" id="table">
+                                <tr>
+                                    <% _.each(header, function(header_item) { %>
+                                        <th ><%= header_item %></th> 
+                                    <% }); %>
+                                </tr>
+                                <% _.each(rows, function(row) { %>
+                                <tr>
+                                    <% _.each(row, function(row_value) { %>
+                                        <td><%= row_value %></td>
+                                    <% }); %>
+                                </tr>
                                 <% }); %>
-                            </tr>
-                            <% _.each(rows, function(row) { %>
-                            <tr>
-                                <% _.each(row, function(row_value) { %>
-                                    <td><%= row_value %></td>
-                                <% }); %>
-                            </tr>
-                            <% }); %>
-                        </script>
-                        <table id="preview-table"></table>
-                    </div><!--#preview-->
+                            </script>
+                            <table id="preview-table"></table>
+                            <script type="text/template" id="JSONView-template">
+                                <pre>
+                                <% _.each(docs, function(doc) { %>
+                                        <div class="JSONdoc"><%=doc%></div>
+                                    <% }); %>
+                                </pre>
+                                
+                            </script>
+                            <div id="JSONView"></div>
+                        </div><!--#preview-->
+                    </div>
                 </div><!--#step2-content-wrapper -->
             </div><!--#second-page-->
             <div id="footer">
