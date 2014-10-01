@@ -16,29 +16,29 @@ body {
 	font-size: 20px;
 	font-weight: 400px;
 }
+
+/* First Page -----------------------------------------------*/
 #wrapper {
 	min-height:100%;
 	position:relative;
+	margin: auto;
 }
 #header {
 	background:#cfdee2;
 	padding:80px;
 }
-#content-wrap {
-	margin: auto;
-	height: 300px;
-	width: 99%;
+#front-page {
 	padding-bottom:100px; /* Height of the footer element */
+	width: 99%;
 }
 #content{
 	margin: auto;
-	height: 250px;
+	height: 290px;
 	width: 740px;
 }
 #fileselect{
 	display:none;
 }
-
 #file-drop-box{
 	display:none;
 	height:225px;
@@ -48,7 +48,6 @@ body {
 	float: left;
 	margin: 20px;
 	color: #002c77;
-
 }
 #file-drop-box.hover{
 	color: #F07C51;
@@ -62,13 +61,13 @@ body {
     display:none;
     margin-left:-5px;
     margin-top: -5px;
+    
 }	
 #instructions{
 	float:left;
 	width: 130px;
 	margin-left: 20px;
-	margin-top: 20px;
-	
+	margin-top: 20px;	
 	font-size: 26px;
 }
 #file-icon{
@@ -77,31 +76,28 @@ body {
 	margin-top: 145px;
 }
 #long-arrow{
-	display:inline;
+	float:left;
 	width: 100px;
 	margin-left: 27px;
 	margin-top: 120px;
-
 }
 #user-inputs{
 	height:100%;
 	width: 330px;
-
 	float: right;
-
 }
 #logo{
 	width: 330px;
 }
-input{
+input.login{
 	border: none;
 	margin-bottom: 5px;
+	margin-left:auto;
+	margin-right: auto;
 	height: 40px;
 	width: 250px;
 	text-align: center;
 	color: #002C77;
-	margin-left:auto;
-	margin-right: auto;
 	display:block;
 }
 #start{
@@ -119,6 +115,191 @@ input{
 	width:10px;
 	padding-left: 3px;
 }
+#startErrorMessage{
+	font-size: 16px;
+	margin-left: 40px;
+	margin-top: 40px;
+	color: #9E2323;
+}
+/* Second Page -----------------------------------------------*/
+#second-page{
+	display:none;
+}
+#step2-content-wrapper{
+	margin: auto;
+	width: 99%;
+	height:100%;
+	overflow-y: scroll;
+	position: absolute;
+	bottom: 0px;
+}
+#options-wrapper{
+	height: 200px;
+	width: 750px;
+	margin:auto;
+	padding: 30px;
+	color:#002c77;
+}
+#options-left-side{
+	float: left;
+	padding-top: 43px;
+}
+
+#options-right-side{
+	float: right;
+}
+#options-right-side .option-dropdown-menu{
+	margin-top: -4px;
+}
+#inDBtext{
+	color: #888;
+	font-size: 16px;
+}
+#div-load{
+	height:18px;
+}
+#load{
+	text-align: right;
+	font-size: 14px;
+	cursor: pointer;
+	float:right;
+}
+#load:hover{
+	text-decoration: underline;
+}
+
+input.options{
+	width: 50px;
+	text-align: center;
+	display:inline;
+}
+
+.desc { 
+	color:#002c77;
+}
+.desc a {
+	color:#002c77;
+}
+.dropdown dd, .dropdown dt, .dropdown ul { 
+	margin:0px; 
+	padding:0px; 
+}
+.dropdown dd { 
+	position:relative; 
+}
+.dropdown a, .dropdown a:visited { 
+	color:#002c77; 
+	text-decoration:none; 
+	outline:none;
+}
+.dropdown a:hover { 
+	color:#002c77;
+}
+.dropdown dt a:hover { 
+	color: #002c77; 
+	color: #f3622d;
+	border: 2px solid #f3622d;
+
+}
+.dropdown dt a {
+	background:#cfdee2 url(images/down_arrow.png) no-repeat scroll right center; 
+	display:block; 
+	padding-right:20px;
+	border:2px solid #002c77; 
+	width:250px;
+}
+.dropdown dt a span {
+	cursor:pointer; 
+	display:block; 
+	padding:5px;
+}
+.dropdown dd ul { 
+	background:#cfdee2 none repeat scroll 0 0; 
+	border:2px solid #002c77; 
+	color:#002c77; 
+	display:none;
+	left:0px; 
+	padding:5px 0px; 
+	position:absolute; 
+	top:2px; 
+	width:250; 
+	min-width:250px; 
+	list-style:none;
+}
+.dropdown span.value { 
+	display:none;
+}
+.dropdown dd ul li a { 
+	padding:5px; 
+	display:block;
+	min-width:260px;
+}
+.dropdown dd ul li a:hover { 	/*highlighting color*/
+	background-color: #CCD0D8;
+}
+.dropdown img.flag { 
+	border:none; 
+	vertical-align:middle; 
+	margin-left:10px; 
+}
+#preview{
+	background-color: white;
+	width: 1000px;
+	margin: auto;
+	padding: 30px;
+	margin-bottom: 150px;
+	overflow-x: scroll; 
+}  
+#viewSelection a:hover{
+	text-decoration: underline;
+}  
+#selections{
+	text-align: center;
+	padding-bottom: 10px;
+	color: #002c77;
+	width: 1000px; 
+	margin: auto;
+}         
+
+#preview-table{
+	width: 100%;
+}
+table, th, td {
+    border-collapse: collapse;
+    border-right: 1px solid #aaa;
+}
+th{
+	text-align: left;
+	font-weight: normal;
+	color: #002c77;
+	border-bottom: 2px solid #002c77;
+}
+td{
+	color: #999;
+}
+th, td {
+    padding: 15px;
+    max-width: 200px;
+    white-space: nowrap;
+	overflow: hidden;
+  	text-overflow: ellipsis;
+}
+.JSONdoc{
+	border: 2px solid #999;
+	color: #999;
+	padding: 40px;
+	margin-top: -50px;
+	text-align: left;
+	font-size: 18px;
+	font-family: 'Source Sans Pro', sans-serif;
+}
+#load_fail{
+	color:red;
+}
+#load_success{
+	color: green;
+}
+
 #footer {
 	background-color: #002c77;
 	width:100%;
