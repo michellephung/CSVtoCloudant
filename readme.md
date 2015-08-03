@@ -33,7 +33,7 @@ This is a webpage which lets you drag and drop a .csv file and then edit how it 
 [<img src="screenshots/jsonview.png">](https://michellephung.github.io/CSVtoCloudant/)
 
 File Will Fail to Load if:    
-- incorrect Name or Password or Database  
+- Incorrect Name or Password or Database  
 - CORS is not enabled user's account
 
 
