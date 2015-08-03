@@ -1,6 +1,6 @@
 #READ ME
 
-Link: [Working UI](https://michellephung.github.io/CSVtoCloudant/)  
+[Working UI](https://michellephung.github.io/CSVtoCloudant/)  
 
 This is a webpage which lets you drag and drop a .csv file and then edit how it will be loaded into a Cloudant Database
 
