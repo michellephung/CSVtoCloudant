@@ -36,13 +36,13 @@ File Will Fail to Load if:
 - Incorrect Name or Password or Database  
 - CORS is not enabled user's account
 
-Please Note:
+Note the following:
 
 1. Currently, loading feedback (green text) will change to 'Success', after the first successful document is loaded into Cloudant. 
 
-2. Document id's will be UUID.
+2. Document \_id's will be UUID.
 
-To Do:   
+To Do   
 
 1. Remove 'database' field from page 1, then on page 2, add dropdown for which database you want to load docs into  
 
