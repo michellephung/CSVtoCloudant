@@ -41,11 +41,13 @@ Please Note:
 
 1. Currently, loading feedback (green text) will change to 'Success', after the first successful document is loaded into Cloudant. 
 
-2. Add option to override UUID as \_id and instead select one of the columns as \_id
+2. Document id's will be UUID.
 
-3. Remove 'database' field from page 1, then on page 2, add dropdown for which database you want to load docs into
+TODO:   
 
-4. Add a progress bar to first/second page when parsing large files. [Currently page is unresponsive while parsing large files-- very noticable lag on csv file with 300+ rows]
+1. Remove 'database' field from page 1, then on page 2, add dropdown for which database you want to load docs into  
+
+4. Add a progress bar to first/second page when parsing large files. [Currently page is unresponsive while parsing large files-- very noticable lag on csv file with 300+ rows]  
 
 5. Get dropdown menus to work in Firefox
 
