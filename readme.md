@@ -2,13 +2,12 @@
 
 Link: [Working UI](https://michellephung.github.io/CSVtoCloudant/)  
 
-About:
 This is a webpage which lets you drag and drop a .csv file and then edit how it will be loaded into a Cloudant Database
 
 
 [Website](https://michellephung.github.io/CSVtoCloudant/)
 
-[Download Website to view source code](https://github.com/michellephung/CSVtoCloudant)
+[Download locally](https://github.com/michellephung/CSVtoCloudant) website to view source code
 
 ==========
 
@@ -29,20 +28,19 @@ This is a webpage which lets you drag and drop a .csv file and then edit how it 
 4. Use as you would the data importer on the Web
 
 
-![thing](https://michellephung.github.io/CSVtoCloudant/screenshots/FrontPage.png)
+![firstpage](screenshots/FrontPage.png)
+![secondpage](screenshots/SecondPage.png)
 
-
-File Will Fail to Load if: 
-- incorrect Name or Password or Database 
+File Will Fail to Load if:    
+- incorrect Name or Password or Database  
 - CORS is not enabled user's account
 
 
+Please Note:
 
-To Dos:
+1. Currently, loading feedback (green text) will change to 'Success', after the first successful document is loaded into Cloudant. 
 
-1. Currently, loading feedback (green text) will change to 'Success', after the first successful document is loaded into Cloudant. This should be re-written so that it changes to 'Success' after all docs are loaded into the db. 
-
-2. Add option to override uuid as _id and instead select one of the columns as _id
+2. Add option to override UUID as \_id and instead select one of the columns as \_id
 
 3. Remove 'database' field from page 1, then on page 2, add dropdown for which database you want to load docs into
 
