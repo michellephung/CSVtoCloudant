@@ -30,6 +30,7 @@ This is a webpage which lets you drag and drop a .csv file and then edit how it 
 
 ![firstpage](screenshots/FrontPage.png)
 ![secondpage](screenshots/SecondPage.png)
+![jsonview](screenshots/jsonview.png)
 
 File Will Fail to Load if:    
 - incorrect Name or Password or Database  
