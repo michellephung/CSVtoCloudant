@@ -28,9 +28,9 @@ This is a webpage which lets you drag and drop a .csv file and then edit how it 
 4. Use as you would the data importer on the Web
 
 
-![firstpage](screenshots/FrontPage.png)
-![secondpage](screenshots/SecondPage.png)
-![jsonview](screenshots/jsonview.png)
+[<img src="screenshots/FrontPage.png">](https://michellephung.github.io/CSVtoCloudant/)
+[<img src="screenshots/SecondPage.png">](https://michellephung.github.io/CSVtoCloudant/)
+[<img src="screenshots/jsonview.png">](https://michellephung.github.io/CSVtoCloudant/)
 
 File Will Fail to Load if:    
 - incorrect Name or Password or Database  
